@@ -1,9 +1,19 @@
 title: Heitor Pita
-email: seu@email.com
-description: Notas sobre pensamentos, estudos, desabafos e enfim
+author: Heitor Pita
+description: >-
+  Notas sobre computação, experimentos e o que aparece no caminho.
+
 baseurl: ""
 url: "https://heitorpita.github.io"
 github_username: heitorpita
+
 theme: minima
 plugins:
   - jekyll-feed
+
+show_excerpts: true
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - vendor

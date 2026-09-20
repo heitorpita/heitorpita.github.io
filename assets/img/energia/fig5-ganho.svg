@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 400" width="880" height="400" role="img" aria-label="Variacao de energia da versao melhorada (n = 100.000)">
+  <title>Variacao de energia da versao melhorada (n = 100.000)</title>
+  <desc>Barras a esquerda indicam economia de energia; a direita, gasto adicional.</desc>
+  <rect width="880" height="400" fill="#fcfcfb"/>
+  <text x="24.0" y="30.0" fill="#0b0b0b" font-size="17" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="600" text-anchor="start" >Quanto a segunda versão economiza — n = 100.000</text>
+  <text x="24.0" y="50.0" fill="#52514e" font-size="12" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="start" >Variação percentual da energia média em relação à versão de partida. Negativo = economia; positivo = gasto a mais.</text>
+  <line x1="286.0" y1="92.0" x2="286.0" y2="346.0" stroke="#e1e0d9" stroke-width="1"/>
+  <text x="286.0" y="366.0" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="middle" >-100 %</text>
+  <line x1="386.8" y1="92.0" x2="386.8" y2="346.0" stroke="#e1e0d9" stroke-width="1"/>
+  <text x="386.8" y="366.0" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="middle" >-75 %</text>
+  <line x1="487.7" y1="92.0" x2="487.7" y2="346.0" stroke="#e1e0d9" stroke-width="1"/>
+  <text x="487.7" y="366.0" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="middle" >-50 %</text>
+  <line x1="588.5" y1="92.0" x2="588.5" y2="346.0" stroke="#e1e0d9" stroke-width="1"/>
+  <text x="588.5" y="366.0" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="middle" >-25 %</text>
+  <line x1="689.3" y1="92.0" x2="689.3" y2="346.0" stroke="#c3c2b7" stroke-width="1.5"/>
+  <text x="689.3" y="366.0" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="middle" >0 %</text>
+  <line x1="770.0" y1="92.0" x2="770.0" y2="346.0" stroke="#e1e0d9" stroke-width="1"/>
+  <text x="270.0" y="117.0" fill="#52514e" font-size="12" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="end" >Ordenação por flutuação · Go</text>
+  <text x="270.0" y="131.0" fill="#898781" font-size="10.5" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="end" >clássica → com extração</text>
+  <path d="M689.3,104.0 H694.0 A4.0,4.0 0 0 1 698.0,108.0 V126.0 A4.0,4.0 0 0 1 694.0,130.0 H689.3 Z" fill="#e34948" stroke="none" stroke-width="1" />
+  <text x="710.0" y="121.0" fill="#0b0b0b" font-size="12" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="600" text-anchor="start" font-variant-numeric="tabular-nums">2,1 %</text>
+  <text x="270.0" y="159.0" fill="#52514e" font-size="12" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="end" >Ordenação por flutuação · Rust</text>
+  <text x="270.0" y="173.0" fill="#898781" font-size="10.5" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="end" >clássica → com limite</text>
+  <path d="M689.3,146.0 H576.5 A4.0,4.0 0 0 0 572.5,150.0 V168.0 A4.0,4.0 0 0 0 576.5,172.0 H689.3 Z" fill="#2a78d6" stroke="none" stroke-width="1" />
+  <text x="584.5" y="163.0" fill="#ffffff" font-size="12" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="600" text-anchor="start" font-variant-numeric="tabular-nums">-29,0 %</text>
+  <text x="270.0" y="201.0" fill="#52514e" font-size="12" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="end" >Ordenação por inserção · Go</text>
+  <text x="270.0" y="215.0" fill="#898781" font-size="10.5" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="end" >com trocas → com deslocamento</text>
+  <path d="M689.3,188.0 H471.1 A4.0,4.0 0 0 0 467.1,192.0 V210.0 A4.0,4.0 0 0 0 471.1,214.0 H689.3 Z" fill="#2a78d6" stroke="none" stroke-width="1" />
+  <text x="479.1" y="205.0" fill="#ffffff" font-size="12" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="600" text-anchor="start" font-variant-numeric="tabular-nums">-55,1 %</text>
+  <text x="270.0" y="243.0" fill="#52514e" font-size="12" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="end" >Ordenação por inserção · Rust</text>
+  <text x="270.0" y="257.0" fill="#898781" font-size="10.5" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="end" >com trocas → com deslocamento</text>
+  <path d="M689.3,230.0 H547.3 A4.0,4.0 0 0 0 543.3,234.0 V252.0 A4.0,4.0 0 0 0 547.3,256.0 H689.3 Z" fill="#2a78d6" stroke="none" stroke-width="1" />
+  <text x="555.3" y="247.0" fill="#ffffff" font-size="12" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="600" text-anchor="start" font-variant-numeric="tabular-nums">-36,2 %</text>
+  <text x="270.0" y="285.0" fill="#52514e" font-size="12" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="end" >Ordenação por seleção · Go</text>
+  <text x="270.0" y="299.0" fill="#898781" font-size="10.5" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="end" >clássica → heapsort</text>
+  <path d="M689.3,272.0 H293.7 A4.0,4.0 0 0 0 289.7,276.0 V294.0 A4.0,4.0 0 0 0 293.7,298.0 H689.3 Z" fill="#2a78d6" stroke="none" stroke-width="1" />
+  <text x="301.7" y="289.0" fill="#ffffff" font-size="12" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="600" text-anchor="start" font-variant-numeric="tabular-nums">-99,1 %</text>
+  <text x="270.0" y="327.0" fill="#52514e" font-size="12" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="end" >Ordenação por seleção · Rust</text>
+  <text x="270.0" y="341.0" fill="#898781" font-size="10.5" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="end" >clássica → heapsort</text>
+  <path d="M689.3,314.0 H292.2 A4.0,4.0 0 0 0 288.2,318.0 V336.0 A4.0,4.0 0 0 0 292.2,340.0 H689.3 Z" fill="#2a78d6" stroke="none" stroke-width="1" />
+  <text x="300.2" y="331.0" fill="#ffffff" font-size="12" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="600" text-anchor="start" font-variant-numeric="tabular-nums">-99,4 %</text>
+</svg>

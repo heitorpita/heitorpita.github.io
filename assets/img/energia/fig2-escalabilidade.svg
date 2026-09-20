@@ -1,0 +1,250 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 920" width="880" height="920" role="img" aria-label="Energia consumida em funcao do tamanho da entrada">
+  <title>Energia consumida em funcao do tamanho da entrada</title>
+  <desc>Escala log-log; a inclinacao da reta indica a ordem de crescimento observada.</desc>
+  <rect width="880" height="920" fill="#fcfcfb"/>
+  <text x="24.0" y="30.0" fill="#0b0b0b" font-size="17" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="600" text-anchor="start" >Como a energia cresce com o tamanho da entrada</text>
+  <text x="24.0" y="50.0" fill="#52514e" font-size="12" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="start" >Eixos logarítmicos: a inclinação da reta é o expoente do crescimento. Traço cheio = 1ª versão, tracejado = 2ª versão.</text>
+  <text x="24.0" y="92.0" fill="#0b0b0b" font-size="13" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="600" text-anchor="start" >Ordenação por flutuação (bubble sort)</text>
+  <line x1="76.0" y1="308.0" x2="674.0" y2="308.0" stroke="#e1e0d9" stroke-width="1"/>
+  <text x="66.0" y="312.0" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="end" >0,01</text>
+  <line x1="76.0" y1="261.5" x2="674.0" y2="261.5" stroke="#e1e0d9" stroke-width="1"/>
+  <text x="66.0" y="265.5" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="end" >0,1</text>
+  <line x1="76.0" y1="215.0" x2="674.0" y2="215.0" stroke="#e1e0d9" stroke-width="1"/>
+  <text x="66.0" y="219.0" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="end" >1</text>
+  <line x1="76.0" y1="168.5" x2="674.0" y2="168.5" stroke="#e1e0d9" stroke-width="1"/>
+  <text x="66.0" y="172.5" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="end" >10</text>
+  <line x1="76.0" y1="122.0" x2="674.0" y2="122.0" stroke="#e1e0d9" stroke-width="1"/>
+  <text x="66.0" y="126.0" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="end" >100</text>
+  <line x1="76.0" y1="108.0" x2="76.0" y2="308.0" stroke="#e1e0d9" stroke-width="1" stroke-dasharray="2 3"/>
+  <text x="76.0" y="326.0" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="middle" >10</text>
+  <line x1="225.5" y1="108.0" x2="225.5" y2="308.0" stroke="#e1e0d9" stroke-width="1" stroke-dasharray="2 3"/>
+  <text x="225.5" y="326.0" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="middle" >100</text>
+  <line x1="375.0" y1="108.0" x2="375.0" y2="308.0" stroke="#e1e0d9" stroke-width="1" stroke-dasharray="2 3"/>
+  <text x="375.0" y="326.0" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="middle" >1.000</text>
+  <line x1="524.5" y1="108.0" x2="524.5" y2="308.0" stroke="#e1e0d9" stroke-width="1" stroke-dasharray="2 3"/>
+  <text x="524.5" y="326.0" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="middle" >10.000</text>
+  <line x1="629.0" y1="108.0" x2="629.0" y2="308.0" stroke="#e1e0d9" stroke-width="1" stroke-dasharray="2 3"/>
+  <text x="629.0" y="340.0" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="middle" >50.000</text>
+  <line x1="674.0" y1="108.0" x2="674.0" y2="308.0" stroke="#e1e0d9" stroke-width="1" stroke-dasharray="2 3"/>
+  <text x="674.0" y="326.0" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="middle" >100.000</text>
+  <line x1="76.0" y1="308.0" x2="674.0" y2="308.0" stroke="#c3c2b7" stroke-width="1"/>
+  <text x="66.0" y="102.0" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="end" >joules</text>
+  <path d="M76.0,294.0 L225.5,296.1 L375.0,285.2 L524.5,212.0 L629.0,146.6 L674.0,118.7" fill="none" stroke="#2a78d6" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+  <circle cx="76.0" cy="294.0" r="4.5" fill="#fcfcfb" />
+  <circle cx="76.0" cy="294.0" r="3.0" fill="#2a78d6" />
+  <circle cx="225.5" cy="296.1" r="4.5" fill="#fcfcfb" />
+  <circle cx="225.5" cy="296.1" r="3.0" fill="#2a78d6" />
+  <circle cx="375.0" cy="285.2" r="4.5" fill="#fcfcfb" />
+  <circle cx="375.0" cy="285.2" r="3.0" fill="#2a78d6" />
+  <circle cx="524.5" cy="212.0" r="4.5" fill="#fcfcfb" />
+  <circle cx="524.5" cy="212.0" r="3.0" fill="#2a78d6" />
+  <circle cx="629.0" cy="146.6" r="4.5" fill="#fcfcfb" />
+  <circle cx="629.0" cy="146.6" r="3.0" fill="#2a78d6" />
+  <circle cx="674.0" cy="118.7" r="4.5" fill="#fcfcfb" />
+  <circle cx="674.0" cy="118.7" r="3.0" fill="#2a78d6" />
+  <path d="M76.0,295.0 L225.5,295.0 L375.0,284.5 L524.5,211.9 L629.0,146.1 L674.0,118.2" fill="none" stroke="#2a78d6" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="6 4"/>
+  <circle cx="76.0" cy="295.0" r="4.5" fill="#fcfcfb" />
+  <circle cx="76.0" cy="295.0" r="3.0" fill="#2a78d6" />
+  <circle cx="225.5" cy="295.0" r="4.5" fill="#fcfcfb" />
+  <circle cx="225.5" cy="295.0" r="3.0" fill="#2a78d6" />
+  <circle cx="375.0" cy="284.5" r="4.5" fill="#fcfcfb" />
+  <circle cx="375.0" cy="284.5" r="3.0" fill="#2a78d6" />
+  <circle cx="524.5" cy="211.9" r="4.5" fill="#fcfcfb" />
+  <circle cx="524.5" cy="211.9" r="3.0" fill="#2a78d6" />
+  <circle cx="629.0" cy="146.1" r="4.5" fill="#fcfcfb" />
+  <circle cx="629.0" cy="146.1" r="3.0" fill="#2a78d6" />
+  <circle cx="674.0" cy="118.2" r="4.5" fill="#fcfcfb" />
+  <circle cx="674.0" cy="118.2" r="3.0" fill="#2a78d6" />
+  <path d="M76.0,295.0 L225.5,295.0 L375.0,285.8 L524.5,209.8 L629.0,145.5 L674.0,117.8" fill="none" stroke="#eb6834" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+  <circle cx="76.0" cy="295.0" r="4.5" fill="#fcfcfb" />
+  <circle cx="76.0" cy="295.0" r="3.0" fill="#eb6834" />
+  <circle cx="225.5" cy="295.0" r="4.5" fill="#fcfcfb" />
+  <circle cx="225.5" cy="295.0" r="3.0" fill="#eb6834" />
+  <circle cx="375.0" cy="285.8" r="4.5" fill="#fcfcfb" />
+  <circle cx="375.0" cy="285.8" r="3.0" fill="#eb6834" />
+  <circle cx="524.5" cy="209.8" r="4.5" fill="#fcfcfb" />
+  <circle cx="524.5" cy="209.8" r="3.0" fill="#eb6834" />
+  <circle cx="629.0" cy="145.5" r="4.5" fill="#fcfcfb" />
+  <circle cx="629.0" cy="145.5" r="3.0" fill="#eb6834" />
+  <circle cx="674.0" cy="117.8" r="4.5" fill="#fcfcfb" />
+  <circle cx="674.0" cy="117.8" r="3.0" fill="#eb6834" />
+  <path d="M76.0,299.8 L225.5,297.3 L375.0,291.2 L524.5,218.0 L629.0,152.8 L674.0,124.7" fill="none" stroke="#eb6834" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="6 4"/>
+  <circle cx="76.0" cy="299.8" r="4.5" fill="#fcfcfb" />
+  <circle cx="76.0" cy="299.8" r="3.0" fill="#eb6834" />
+  <circle cx="225.5" cy="297.3" r="4.5" fill="#fcfcfb" />
+  <circle cx="225.5" cy="297.3" r="3.0" fill="#eb6834" />
+  <circle cx="375.0" cy="291.2" r="4.5" fill="#fcfcfb" />
+  <circle cx="375.0" cy="291.2" r="3.0" fill="#eb6834" />
+  <circle cx="524.5" cy="218.0" r="4.5" fill="#fcfcfb" />
+  <circle cx="524.5" cy="218.0" r="3.0" fill="#eb6834" />
+  <circle cx="629.0" cy="152.8" r="4.5" fill="#fcfcfb" />
+  <circle cx="629.0" cy="152.8" r="3.0" fill="#eb6834" />
+  <circle cx="674.0" cy="124.7" r="4.5" fill="#fcfcfb" />
+  <circle cx="674.0" cy="124.7" r="3.0" fill="#eb6834" />
+  <text x="688.0" y="121.8" fill="#eb6834" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="600" text-anchor="start" >Rust · clássica</text>
+  <text x="688.0" y="137.8" fill="#2a78d6" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="600" text-anchor="start" >Go · com extração</text>
+  <text x="688.0" y="153.8" fill="#2a78d6" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="600" text-anchor="start" >Go · clássica</text>
+  <text x="688.0" y="169.8" fill="#eb6834" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="600" text-anchor="start" >Rust · com limite</text>
+  <text x="24.0" y="366.0" fill="#0b0b0b" font-size="13" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="600" text-anchor="start" >Ordenação por inserção (insertion sort)</text>
+  <line x1="76.0" y1="582.0" x2="674.0" y2="582.0" stroke="#e1e0d9" stroke-width="1"/>
+  <text x="66.0" y="586.0" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="end" >0,01</text>
+  <line x1="76.0" y1="535.5" x2="674.0" y2="535.5" stroke="#e1e0d9" stroke-width="1"/>
+  <text x="66.0" y="539.5" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="end" >0,1</text>
+  <line x1="76.0" y1="489.0" x2="674.0" y2="489.0" stroke="#e1e0d9" stroke-width="1"/>
+  <text x="66.0" y="493.0" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="end" >1</text>
+  <line x1="76.0" y1="442.5" x2="674.0" y2="442.5" stroke="#e1e0d9" stroke-width="1"/>
+  <text x="66.0" y="446.5" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="end" >10</text>
+  <line x1="76.0" y1="396.0" x2="674.0" y2="396.0" stroke="#e1e0d9" stroke-width="1"/>
+  <text x="66.0" y="400.0" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="end" >100</text>
+  <line x1="76.0" y1="382.0" x2="76.0" y2="582.0" stroke="#e1e0d9" stroke-width="1" stroke-dasharray="2 3"/>
+  <text x="76.0" y="600.0" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="middle" >10</text>
+  <line x1="225.5" y1="382.0" x2="225.5" y2="582.0" stroke="#e1e0d9" stroke-width="1" stroke-dasharray="2 3"/>
+  <text x="225.5" y="600.0" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="middle" >100</text>
+  <line x1="375.0" y1="382.0" x2="375.0" y2="582.0" stroke="#e1e0d9" stroke-width="1" stroke-dasharray="2 3"/>
+  <text x="375.0" y="600.0" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="middle" >1.000</text>
+  <line x1="524.5" y1="382.0" x2="524.5" y2="582.0" stroke="#e1e0d9" stroke-width="1" stroke-dasharray="2 3"/>
+  <text x="524.5" y="600.0" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="middle" >10.000</text>
+  <line x1="629.0" y1="382.0" x2="629.0" y2="582.0" stroke="#e1e0d9" stroke-width="1" stroke-dasharray="2 3"/>
+  <text x="629.0" y="614.0" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="middle" >50.000</text>
+  <line x1="674.0" y1="382.0" x2="674.0" y2="582.0" stroke="#e1e0d9" stroke-width="1" stroke-dasharray="2 3"/>
+  <text x="674.0" y="600.0" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="middle" >100.000</text>
+  <line x1="76.0" y1="582.0" x2="674.0" y2="582.0" stroke="#c3c2b7" stroke-width="1"/>
+  <text x="66.0" y="376.0" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="end" >joules</text>
+  <path d="M76.0,569.0 L225.5,566.1 L375.0,567.0 L524.5,514.1 L629.0,451.3 L674.0,423.1" fill="none" stroke="#2a78d6" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+  <circle cx="76.0" cy="569.0" r="4.5" fill="#fcfcfb" />
+  <circle cx="76.0" cy="569.0" r="3.0" fill="#2a78d6" />
+  <circle cx="225.5" cy="566.1" r="4.5" fill="#fcfcfb" />
+  <circle cx="225.5" cy="566.1" r="3.0" fill="#2a78d6" />
+  <circle cx="375.0" cy="567.0" r="4.5" fill="#fcfcfb" />
+  <circle cx="375.0" cy="567.0" r="3.0" fill="#2a78d6" />
+  <circle cx="524.5" cy="514.1" r="4.5" fill="#fcfcfb" />
+  <circle cx="524.5" cy="514.1" r="3.0" fill="#2a78d6" />
+  <circle cx="629.0" cy="451.3" r="4.5" fill="#fcfcfb" />
+  <circle cx="629.0" cy="451.3" r="3.0" fill="#2a78d6" />
+  <circle cx="674.0" cy="423.1" r="4.5" fill="#fcfcfb" />
+  <circle cx="674.0" cy="423.1" r="3.0" fill="#2a78d6" />
+  <path d="M76.0,570.1 L225.5,570.1 L375.0,568.0 L524.5,530.5 L629.0,469.0 L674.0,439.3" fill="none" stroke="#2a78d6" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="6 4"/>
+  <circle cx="76.0" cy="570.1" r="4.5" fill="#fcfcfb" />
+  <circle cx="76.0" cy="570.1" r="3.0" fill="#2a78d6" />
+  <circle cx="225.5" cy="570.1" r="4.5" fill="#fcfcfb" />
+  <circle cx="225.5" cy="570.1" r="3.0" fill="#2a78d6" />
+  <circle cx="375.0" cy="568.0" r="4.5" fill="#fcfcfb" />
+  <circle cx="375.0" cy="568.0" r="3.0" fill="#2a78d6" />
+  <circle cx="524.5" cy="530.5" r="4.5" fill="#fcfcfb" />
+  <circle cx="524.5" cy="530.5" r="3.0" fill="#2a78d6" />
+  <circle cx="629.0" cy="469.0" r="4.5" fill="#fcfcfb" />
+  <circle cx="629.0" cy="469.0" r="3.0" fill="#2a78d6" />
+  <circle cx="674.0" cy="439.3" r="4.5" fill="#fcfcfb" />
+  <circle cx="674.0" cy="439.3" r="3.0" fill="#2a78d6" />
+  <path d="M76.0,570.1 L225.5,570.1 L375.0,568.0 L524.5,529.3 L629.0,467.6 L674.0,439.4" fill="none" stroke="#eb6834" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+  <circle cx="76.0" cy="570.1" r="4.5" fill="#fcfcfb" />
+  <circle cx="76.0" cy="570.1" r="3.0" fill="#eb6834" />
+  <circle cx="225.5" cy="570.1" r="4.5" fill="#fcfcfb" />
+  <circle cx="225.5" cy="570.1" r="3.0" fill="#eb6834" />
+  <circle cx="375.0" cy="568.0" r="4.5" fill="#fcfcfb" />
+  <circle cx="375.0" cy="568.0" r="3.0" fill="#eb6834" />
+  <circle cx="524.5" cy="529.3" r="4.5" fill="#fcfcfb" />
+  <circle cx="524.5" cy="529.3" r="3.0" fill="#eb6834" />
+  <circle cx="629.0" cy="467.6" r="4.5" fill="#fcfcfb" />
+  <circle cx="629.0" cy="467.6" r="3.0" fill="#eb6834" />
+  <circle cx="674.0" cy="439.4" r="4.5" fill="#fcfcfb" />
+  <circle cx="674.0" cy="439.4" r="3.0" fill="#eb6834" />
+  <path d="M76.0,570.1 L225.5,571.3 L375.0,569.0 L524.5,537.9 L629.0,477.0 L674.0,448.5" fill="none" stroke="#eb6834" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="6 4"/>
+  <circle cx="76.0" cy="570.1" r="4.5" fill="#fcfcfb" />
+  <circle cx="76.0" cy="570.1" r="3.0" fill="#eb6834" />
+  <circle cx="225.5" cy="571.3" r="4.5" fill="#fcfcfb" />
+  <circle cx="225.5" cy="571.3" r="3.0" fill="#eb6834" />
+  <circle cx="375.0" cy="569.0" r="4.5" fill="#fcfcfb" />
+  <circle cx="375.0" cy="569.0" r="3.0" fill="#eb6834" />
+  <circle cx="524.5" cy="537.9" r="4.5" fill="#fcfcfb" />
+  <circle cx="524.5" cy="537.9" r="3.0" fill="#eb6834" />
+  <circle cx="629.0" cy="477.0" r="4.5" fill="#fcfcfb" />
+  <circle cx="629.0" cy="477.0" r="3.0" fill="#eb6834" />
+  <circle cx="674.0" cy="448.5" r="4.5" fill="#fcfcfb" />
+  <circle cx="674.0" cy="448.5" r="3.0" fill="#eb6834" />
+  <text x="688.0" y="427.1" fill="#2a78d6" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="600" text-anchor="start" >Go · com trocas</text>
+  <text x="688.0" y="443.3" fill="#2a78d6" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="600" text-anchor="start" >Go · com deslocamento</text>
+  <text x="688.0" y="459.3" fill="#eb6834" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="600" text-anchor="start" >Rust · com trocas</text>
+  <text x="688.0" y="475.3" fill="#eb6834" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="600" text-anchor="start" >Rust · com deslocamento</text>
+  <text x="24.0" y="640.0" fill="#0b0b0b" font-size="13" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="600" text-anchor="start" >Ordenação por seleção (selection sort / heapsort)</text>
+  <line x1="76.0" y1="856.0" x2="674.0" y2="856.0" stroke="#e1e0d9" stroke-width="1"/>
+  <text x="66.0" y="860.0" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="end" >0,01</text>
+  <line x1="76.0" y1="809.5" x2="674.0" y2="809.5" stroke="#e1e0d9" stroke-width="1"/>
+  <text x="66.0" y="813.5" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="end" >0,1</text>
+  <line x1="76.0" y1="763.0" x2="674.0" y2="763.0" stroke="#e1e0d9" stroke-width="1"/>
+  <text x="66.0" y="767.0" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="end" >1</text>
+  <line x1="76.0" y1="716.5" x2="674.0" y2="716.5" stroke="#e1e0d9" stroke-width="1"/>
+  <text x="66.0" y="720.5" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="end" >10</text>
+  <line x1="76.0" y1="670.0" x2="674.0" y2="670.0" stroke="#e1e0d9" stroke-width="1"/>
+  <text x="66.0" y="674.0" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="end" >100</text>
+  <line x1="76.0" y1="656.0" x2="76.0" y2="856.0" stroke="#e1e0d9" stroke-width="1" stroke-dasharray="2 3"/>
+  <text x="76.0" y="874.0" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="middle" >10</text>
+  <line x1="225.5" y1="656.0" x2="225.5" y2="856.0" stroke="#e1e0d9" stroke-width="1" stroke-dasharray="2 3"/>
+  <text x="225.5" y="874.0" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="middle" >100</text>
+  <line x1="375.0" y1="656.0" x2="375.0" y2="856.0" stroke="#e1e0d9" stroke-width="1" stroke-dasharray="2 3"/>
+  <text x="375.0" y="874.0" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="middle" >1.000</text>
+  <line x1="524.5" y1="656.0" x2="524.5" y2="856.0" stroke="#e1e0d9" stroke-width="1" stroke-dasharray="2 3"/>
+  <text x="524.5" y="874.0" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="middle" >10.000</text>
+  <line x1="629.0" y1="656.0" x2="629.0" y2="856.0" stroke="#e1e0d9" stroke-width="1" stroke-dasharray="2 3"/>
+  <text x="629.0" y="888.0" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="middle" >50.000</text>
+  <line x1="674.0" y1="656.0" x2="674.0" y2="856.0" stroke="#e1e0d9" stroke-width="1" stroke-dasharray="2 3"/>
+  <text x="674.0" y="874.0" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="middle" >100.000</text>
+  <line x1="76.0" y1="856.0" x2="674.0" y2="856.0" stroke="#c3c2b7" stroke-width="1"/>
+  <text x="66.0" y="650.0" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="end" >joules</text>
+  <path d="M76.0,841.0 L225.5,842.0 L375.0,841.0 L524.5,826.5 L629.0,799.5 L674.0,784.9" fill="none" stroke="#2a78d6" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+  <circle cx="76.0" cy="841.0" r="4.5" fill="#fcfcfb" />
+  <circle cx="76.0" cy="841.0" r="3.0" fill="#2a78d6" />
+  <circle cx="225.5" cy="842.0" r="4.5" fill="#fcfcfb" />
+  <circle cx="225.5" cy="842.0" r="3.0" fill="#2a78d6" />
+  <circle cx="375.0" cy="841.0" r="4.5" fill="#fcfcfb" />
+  <circle cx="375.0" cy="841.0" r="3.0" fill="#2a78d6" />
+  <circle cx="524.5" cy="826.5" r="4.5" fill="#fcfcfb" />
+  <circle cx="524.5" cy="826.5" r="3.0" fill="#2a78d6" />
+  <circle cx="629.0" cy="799.5" r="4.5" fill="#fcfcfb" />
+  <circle cx="629.0" cy="799.5" r="3.0" fill="#2a78d6" />
+  <circle cx="674.0" cy="784.9" r="4.5" fill="#fcfcfb" />
+  <circle cx="674.0" cy="784.9" r="3.0" fill="#2a78d6" />
+  <path d="M76.0,842.0 L225.5,844.1 L375.0,838.3 L524.5,784.4 L629.0,719.4 L674.0,690.4" fill="none" stroke="#2a78d6" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="6 4"/>
+  <circle cx="76.0" cy="842.0" r="4.5" fill="#fcfcfb" />
+  <circle cx="76.0" cy="842.0" r="3.0" fill="#2a78d6" />
+  <circle cx="225.5" cy="844.1" r="4.5" fill="#fcfcfb" />
+  <circle cx="225.5" cy="844.1" r="3.0" fill="#2a78d6" />
+  <circle cx="375.0" cy="838.3" r="4.5" fill="#fcfcfb" />
+  <circle cx="375.0" cy="838.3" r="3.0" fill="#2a78d6" />
+  <circle cx="524.5" cy="784.4" r="4.5" fill="#fcfcfb" />
+  <circle cx="524.5" cy="784.4" r="3.0" fill="#2a78d6" />
+  <circle cx="629.0" cy="719.4" r="4.5" fill="#fcfcfb" />
+  <circle cx="629.0" cy="719.4" r="3.0" fill="#2a78d6" />
+  <circle cx="674.0" cy="690.4" r="4.5" fill="#fcfcfb" />
+  <circle cx="674.0" cy="690.4" r="3.0" fill="#2a78d6" />
+  <path d="M76.0,844.1 L225.5,846.5 L375.0,842.0 L524.5,786.6 L629.0,723.3 L674.0,695.2" fill="none" stroke="#eb6834" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+  <circle cx="76.0" cy="844.1" r="4.5" fill="#fcfcfb" />
+  <circle cx="76.0" cy="844.1" r="3.0" fill="#eb6834" />
+  <circle cx="225.5" cy="846.5" r="4.5" fill="#fcfcfb" />
+  <circle cx="225.5" cy="846.5" r="3.0" fill="#eb6834" />
+  <circle cx="375.0" cy="842.0" r="4.5" fill="#fcfcfb" />
+  <circle cx="375.0" cy="842.0" r="3.0" fill="#eb6834" />
+  <circle cx="524.5" cy="786.6" r="4.5" fill="#fcfcfb" />
+  <circle cx="524.5" cy="786.6" r="3.0" fill="#eb6834" />
+  <circle cx="629.0" cy="723.3" r="4.5" fill="#fcfcfb" />
+  <circle cx="629.0" cy="723.3" r="3.0" fill="#eb6834" />
+  <circle cx="674.0" cy="695.2" r="4.5" fill="#fcfcfb" />
+  <circle cx="674.0" cy="695.2" r="3.0" fill="#eb6834" />
+  <path d="M76.0,844.1 L225.5,844.1 L375.0,843.0 L524.5,838.3 L629.0,812.8 L674.0,800.0" fill="none" stroke="#eb6834" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="6 4"/>
+  <circle cx="76.0" cy="844.1" r="4.5" fill="#fcfcfb" />
+  <circle cx="76.0" cy="844.1" r="3.0" fill="#eb6834" />
+  <circle cx="225.5" cy="844.1" r="4.5" fill="#fcfcfb" />
+  <circle cx="225.5" cy="844.1" r="3.0" fill="#eb6834" />
+  <circle cx="375.0" cy="843.0" r="4.5" fill="#fcfcfb" />
+  <circle cx="375.0" cy="843.0" r="3.0" fill="#eb6834" />
+  <circle cx="524.5" cy="838.3" r="4.5" fill="#fcfcfb" />
+  <circle cx="524.5" cy="838.3" r="3.0" fill="#eb6834" />
+  <circle cx="629.0" cy="812.8" r="4.5" fill="#fcfcfb" />
+  <circle cx="629.0" cy="812.8" r="3.0" fill="#eb6834" />
+  <circle cx="674.0" cy="800.0" r="4.5" fill="#fcfcfb" />
+  <circle cx="674.0" cy="800.0" r="3.0" fill="#eb6834" />
+  <text x="688.0" y="694.4" fill="#2a78d6" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="600" text-anchor="start" >Go · clássica</text>
+  <text x="688.0" y="710.4" fill="#eb6834" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="600" text-anchor="start" >Rust · clássica</text>
+  <text x="688.0" y="788.9" fill="#2a78d6" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="600" text-anchor="start" >Go · heapsort</text>
+  <text x="688.0" y="804.9" fill="#eb6834" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="600" text-anchor="start" >Rust · heapsort</text>
+</svg>

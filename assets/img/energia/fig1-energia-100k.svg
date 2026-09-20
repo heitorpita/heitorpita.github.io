@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 690" width="880" height="690" role="img" aria-label="Energia media por configuracao em n = 100.000">
+  <title>Energia media por configuracao em n = 100.000</title>
+  <desc>Barras horizontais da energia media de 10 execucoes, uma escala por algoritmo.</desc>
+  <rect width="880" height="690" fill="#fcfcfb"/>
+  <text x="24.0" y="30.0" fill="#0b0b0b" font-size="17" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="600" text-anchor="start" >Energia média por execução — n = 100.000 elementos</text>
+  <text x="24.0" y="50.0" fill="#52514e" font-size="12" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="start" >Média de 10 execuções; a barra preta marca 1 desvio padrão. Cada painel tem a sua própria escala.</text>
+  <text x="822.0" y="34.0" fill="#52514e" font-size="12" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="start" >Rust</text>
+  <circle cx="811.0" cy="30.0" r="5.0" fill="#eb6834" />
+  <text x="786.0" y="34.0" fill="#52514e" font-size="12" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="start" >Go</text>
+  <circle cx="775.0" cy="30.0" r="5.0" fill="#2a78d6" />
+  <text x="24.0" y="94.0" fill="#0b0b0b" font-size="13" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="600" text-anchor="start" >Ordenação por flutuação (bubble sort)</text>
+  <line x1="236.0" y1="108.0" x2="236.0" y2="244.0" stroke="#e1e0d9" stroke-width="1"/>
+  <line x1="418.7" y1="108.0" x2="418.7" y2="244.0" stroke="#e1e0d9" stroke-width="1"/>
+  <line x1="601.3" y1="108.0" x2="601.3" y2="244.0" stroke="#e1e0d9" stroke-width="1"/>
+  <line x1="784.0" y1="108.0" x2="784.0" y2="244.0" stroke="#e1e0d9" stroke-width="1"/>
+  <text x="224.0" y="127.0" fill="#52514e" font-size="12" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="end" >Go · clássica</text>
+  <path d="M236.0,112.0 H662.8 A4.0,4.0 0 0 1 666.8,116.0 V130.0 A4.0,4.0 0 0 1 662.8,134.0 H236.0 Z" fill="#2a78d6" stroke="none" stroke-width="1" />
+  <line x1="665.6" y1="123.0" x2="668.1" y2="123.0" stroke="#0b0b0b" stroke-width="1.5"/>
+  <line x1="665.6" y1="119.0" x2="665.6" y2="127.0" stroke="#0b0b0b" stroke-width="1.5"/>
+  <line x1="668.1" y1="119.0" x2="668.1" y2="127.0" stroke="#0b0b0b" stroke-width="1.5"/>
+  <text x="678.1" y="127.0" fill="#0b0b0b" font-size="12" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="600" text-anchor="start" font-variant-numeric="tabular-nums">117,9 J</text>
+  <text x="224.0" y="157.0" fill="#52514e" font-size="12" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="end" >Go · com extração</text>
+  <path d="M236.0,142.0 H672.1 A4.0,4.0 0 0 1 676.1,146.0 V160.0 A4.0,4.0 0 0 1 672.1,164.0 H236.0 Z" fill="#2a78d6" stroke="none" stroke-width="1" />
+  <line x1="674.5" y1="153.0" x2="677.7" y2="153.0" stroke="#0b0b0b" stroke-width="1.5"/>
+  <line x1="674.5" y1="149.0" x2="674.5" y2="157.0" stroke="#0b0b0b" stroke-width="1.5"/>
+  <line x1="677.7" y1="149.0" x2="677.7" y2="157.0" stroke="#0b0b0b" stroke-width="1.5"/>
+  <text x="687.7" y="157.0" fill="#0b0b0b" font-size="12" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="600" text-anchor="start" font-variant-numeric="tabular-nums">120,5 J</text>
+  <text x="224.0" y="199.0" fill="#52514e" font-size="12" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="end" >Rust · clássica</text>
+  <path d="M236.0,184.0 H681.4 A4.0,4.0 0 0 1 685.4,188.0 V202.0 A4.0,4.0 0 0 1 681.4,206.0 H236.0 Z" fill="#eb6834" stroke="none" stroke-width="1" />
+  <line x1="674.3" y1="195.0" x2="696.5" y2="195.0" stroke="#0b0b0b" stroke-width="1.5"/>
+  <line x1="674.3" y1="191.0" x2="674.3" y2="199.0" stroke="#0b0b0b" stroke-width="1.5"/>
+  <line x1="696.5" y1="191.0" x2="696.5" y2="199.0" stroke="#0b0b0b" stroke-width="1.5"/>
+  <text x="706.5" y="199.0" fill="#0b0b0b" font-size="12" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="600" text-anchor="start" font-variant-numeric="tabular-nums">123,0 J</text>
+  <text x="224.0" y="229.0" fill="#52514e" font-size="12" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="end" >Rust · com limite</text>
+  <path d="M236.0,214.0 H551.2 A4.0,4.0 0 0 1 555.2,218.0 V232.0 A4.0,4.0 0 0 1 551.2,236.0 H236.0 Z" fill="#eb6834" stroke="none" stroke-width="1" />
+  <line x1="553.7" y1="225.0" x2="556.7" y2="225.0" stroke="#0b0b0b" stroke-width="1.5"/>
+  <line x1="553.7" y1="221.0" x2="553.7" y2="229.0" stroke="#0b0b0b" stroke-width="1.5"/>
+  <line x1="556.7" y1="221.0" x2="556.7" y2="229.0" stroke="#0b0b0b" stroke-width="1.5"/>
+  <text x="566.7" y="229.0" fill="#0b0b0b" font-size="12" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="600" text-anchor="start" font-variant-numeric="tabular-nums">87,4 J</text>
+  <line x1="236.0" y1="244.0" x2="784.0" y2="244.0" stroke="#c3c2b7" stroke-width="1"/>
+  <text x="236.0" y="260.0" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="middle" >0</text>
+  <text x="418.7" y="260.0" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="middle" >50</text>
+  <text x="601.3" y="260.0" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="middle" >100</text>
+  <text x="784.0" y="260.0" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="middle" >150</text>
+  <text x="784.0" y="276.0" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="end" >joules</text>
+  <text x="24.0" y="298.0" fill="#0b0b0b" font-size="13" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="600" text-anchor="start" >Ordenação por inserção (insertion sort)</text>
+  <line x1="236.0" y1="312.0" x2="236.0" y2="448.0" stroke="#e1e0d9" stroke-width="1"/>
+  <line x1="418.7" y1="312.0" x2="418.7" y2="448.0" stroke="#e1e0d9" stroke-width="1"/>
+  <line x1="601.3" y1="312.0" x2="601.3" y2="448.0" stroke="#e1e0d9" stroke-width="1"/>
+  <line x1="784.0" y1="312.0" x2="784.0" y2="448.0" stroke="#e1e0d9" stroke-width="1"/>
+  <text x="224.0" y="331.0" fill="#52514e" font-size="12" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="end" >Go · com trocas</text>
+  <path d="M236.0,316.0 H709.3 A4.0,4.0 0 0 1 713.3,320.0 V334.0 A4.0,4.0 0 0 1 709.3,338.0 H236.0 Z" fill="#2a78d6" stroke="none" stroke-width="1" />
+  <line x1="711.0" y1="327.0" x2="715.6" y2="327.0" stroke="#0b0b0b" stroke-width="1.5"/>
+  <line x1="711.0" y1="323.0" x2="711.0" y2="331.0" stroke="#0b0b0b" stroke-width="1.5"/>
+  <line x1="715.6" y1="323.0" x2="715.6" y2="331.0" stroke="#0b0b0b" stroke-width="1.5"/>
+  <text x="725.6" y="331.0" fill="#0b0b0b" font-size="12" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="600" text-anchor="start" font-variant-numeric="tabular-nums">26,1 J</text>
+  <text x="224.0" y="361.0" fill="#52514e" font-size="12" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="end" >Go · com deslocamento</text>
+  <path d="M236.0,346.0 H446.3 A4.0,4.0 0 0 1 450.3,350.0 V364.0 A4.0,4.0 0 0 1 446.3,368.0 H236.0 Z" fill="#2a78d6" stroke="none" stroke-width="1" />
+  <line x1="446.8" y1="357.0" x2="453.7" y2="357.0" stroke="#0b0b0b" stroke-width="1.5"/>
+  <line x1="446.8" y1="353.0" x2="446.8" y2="361.0" stroke="#0b0b0b" stroke-width="1.5"/>
+  <line x1="453.7" y1="353.0" x2="453.7" y2="361.0" stroke="#0b0b0b" stroke-width="1.5"/>
+  <text x="463.7" y="361.0" fill="#0b0b0b" font-size="12" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="600" text-anchor="start" font-variant-numeric="tabular-nums">11,7 J</text>
+  <text x="224.0" y="403.0" fill="#52514e" font-size="12" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="end" >Rust · com trocas</text>
+  <path d="M236.0,388.0 H444.7 A4.0,4.0 0 0 1 448.7,392.0 V406.0 A4.0,4.0 0 0 1 444.7,410.0 H236.0 Z" fill="#eb6834" stroke="none" stroke-width="1" />
+  <line x1="447.3" y1="399.0" x2="450.1" y2="399.0" stroke="#0b0b0b" stroke-width="1.5"/>
+  <line x1="447.3" y1="395.0" x2="447.3" y2="403.0" stroke="#0b0b0b" stroke-width="1.5"/>
+  <line x1="450.1" y1="395.0" x2="450.1" y2="403.0" stroke="#0b0b0b" stroke-width="1.5"/>
+  <text x="460.1" y="403.0" fill="#0b0b0b" font-size="12" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="600" text-anchor="start" font-variant-numeric="tabular-nums">11,6 J</text>
+  <text x="224.0" y="433.0" fill="#52514e" font-size="12" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="end" >Rust · com deslocamento</text>
+  <path d="M236.0,418.0 H367.7 A4.0,4.0 0 0 1 371.7,422.0 V436.0 A4.0,4.0 0 0 1 367.7,440.0 H236.0 Z" fill="#eb6834" stroke="none" stroke-width="1" />
+  <line x1="370.7" y1="429.0" x2="372.6" y2="429.0" stroke="#0b0b0b" stroke-width="1.5"/>
+  <line x1="370.7" y1="425.0" x2="370.7" y2="433.0" stroke="#0b0b0b" stroke-width="1.5"/>
+  <line x1="372.6" y1="425.0" x2="372.6" y2="433.0" stroke="#0b0b0b" stroke-width="1.5"/>
+  <text x="382.6" y="433.0" fill="#0b0b0b" font-size="12" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="600" text-anchor="start" font-variant-numeric="tabular-nums">7,43 J</text>
+  <line x1="236.0" y1="448.0" x2="784.0" y2="448.0" stroke="#c3c2b7" stroke-width="1"/>
+  <text x="236.0" y="464.0" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="middle" >0</text>
+  <text x="418.7" y="464.0" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="middle" >10</text>
+  <text x="601.3" y="464.0" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="middle" >20</text>
+  <text x="784.0" y="464.0" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="middle" >30</text>
+  <text x="784.0" y="480.0" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="end" >joules</text>
+  <text x="24.0" y="502.0" fill="#0b0b0b" font-size="13" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="600" text-anchor="start" >Ordenação por seleção (selection sort / heapsort)</text>
+  <line x1="236.0" y1="516.0" x2="236.0" y2="652.0" stroke="#e1e0d9" stroke-width="1"/>
+  <line x1="373.0" y1="516.0" x2="373.0" y2="652.0" stroke="#e1e0d9" stroke-width="1"/>
+  <line x1="510.0" y1="516.0" x2="510.0" y2="652.0" stroke="#e1e0d9" stroke-width="1"/>
+  <line x1="647.0" y1="516.0" x2="647.0" y2="652.0" stroke="#e1e0d9" stroke-width="1"/>
+  <line x1="784.0" y1="516.0" x2="784.0" y2="652.0" stroke="#e1e0d9" stroke-width="1"/>
+  <text x="224.0" y="535.0" fill="#52514e" font-size="12" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="end" >Go · heapsort</text>
+  <path d="M236.0,520.0 H236.6 A4.0,4.0 0 0 1 240.6,524.0 V538.0 A4.0,4.0 0 0 1 236.6,542.0 H236.0 Z" fill="#2a78d6" stroke="none" stroke-width="1" />
+  <line x1="240.4" y1="531.0" x2="240.9" y2="531.0" stroke="#0b0b0b" stroke-width="1.5"/>
+  <line x1="240.4" y1="527.0" x2="240.4" y2="535.0" stroke="#0b0b0b" stroke-width="1.5"/>
+  <line x1="240.9" y1="527.0" x2="240.9" y2="535.0" stroke="#0b0b0b" stroke-width="1.5"/>
+  <text x="250.9" y="535.0" fill="#0b0b0b" font-size="12" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="600" text-anchor="start" font-variant-numeric="tabular-nums">0,338 J</text>
+  <text x="224.0" y="565.0" fill="#52514e" font-size="12" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="end" >Go · clássica</text>
+  <path d="M236.0,550.0 H730.3 A4.0,4.0 0 0 1 734.3,554.0 V568.0 A4.0,4.0 0 0 1 730.3,572.0 H236.0 Z" fill="#2a78d6" stroke="none" stroke-width="1" />
+  <line x1="732.4" y1="561.0" x2="736.2" y2="561.0" stroke="#0b0b0b" stroke-width="1.5"/>
+  <line x1="732.4" y1="557.0" x2="732.4" y2="565.0" stroke="#0b0b0b" stroke-width="1.5"/>
+  <line x1="736.2" y1="557.0" x2="736.2" y2="565.0" stroke="#0b0b0b" stroke-width="1.5"/>
+  <text x="746.2" y="565.0" fill="#0b0b0b" font-size="12" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="600" text-anchor="start" font-variant-numeric="tabular-nums">36,4 J</text>
+  <text x="224.0" y="607.0" fill="#52514e" font-size="12" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="end" >Rust · clássica</text>
+  <path d="M236.0,592.0 H626.0 A4.0,4.0 0 0 1 630.0,596.0 V610.0 A4.0,4.0 0 0 1 626.0,614.0 H236.0 Z" fill="#eb6834" stroke="none" stroke-width="1" />
+  <line x1="626.7" y1="603.0" x2="633.3" y2="603.0" stroke="#0b0b0b" stroke-width="1.5"/>
+  <line x1="626.7" y1="599.0" x2="626.7" y2="607.0" stroke="#0b0b0b" stroke-width="1.5"/>
+  <line x1="633.3" y1="599.0" x2="633.3" y2="607.0" stroke="#0b0b0b" stroke-width="1.5"/>
+  <text x="643.3" y="607.0" fill="#0b0b0b" font-size="12" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="600" text-anchor="start" font-variant-numeric="tabular-nums">28,8 J</text>
+  <text x="224.0" y="637.0" fill="#52514e" font-size="12" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="end" >Rust · heapsort</text>
+  <path d="M236.0,622.0 H236.0 A2.2,2.2 0 0 1 238.2,624.2 V641.8 A2.2,2.2 0 0 1 236.0,644.0 H236.0 Z" fill="#eb6834" stroke="none" stroke-width="1" />
+  <line x1="238.2" y1="633.0" x2="238.2" y2="633.0" stroke="#0b0b0b" stroke-width="1.5"/>
+  <line x1="238.2" y1="629.0" x2="238.2" y2="637.0" stroke="#0b0b0b" stroke-width="1.5"/>
+  <line x1="238.2" y1="629.0" x2="238.2" y2="637.0" stroke="#0b0b0b" stroke-width="1.5"/>
+  <text x="248.2" y="637.0" fill="#0b0b0b" font-size="12" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="600" text-anchor="start" font-variant-numeric="tabular-nums">0,160 J</text>
+  <line x1="236.0" y1="652.0" x2="784.0" y2="652.0" stroke="#c3c2b7" stroke-width="1"/>
+  <text x="236.0" y="668.0" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="middle" >0</text>
+  <text x="373.0" y="668.0" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="middle" >10</text>
+  <text x="510.0" y="668.0" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="middle" >20</text>
+  <text x="647.0" y="668.0" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="middle" >30</text>
+  <text x="784.0" y="668.0" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="middle" >40</text>
+  <text x="784.0" y="684.0" fill="#898781" font-size="11" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="400" text-anchor="end" >joules</text>
+</svg>
