@@ -1,8 +1,9 @@
 ---
 layout: post
-title:  "Ordenar em joules: seis otimizações, duas máquinas, uma economia que sobreviveu"
+title:  "Ordenar em Joules: energia de algoritmos de ordenação em Go e Rust, em duas máquinas"
 date:   2026-09-20 09:00:00 -0300
 categories: energia algoritmos experimento
+image: /assets/img/energia/fig1_ranking_linguagens.png
 ---
 
 **Gabriel Moura e Heitor Pita**  
@@ -17,381 +18,371 @@ Código, dados e scripts: [github.com/heitorpita/GoxRust_energy](https://github.
 .post-content table td, .post-content table th { padding: 6px 10px; }
 </style>
 
-## A pergunta
+Medimos energia e tempo de seis famílias de algoritmos de ordenação implementadas
+em Go e Rust, com `perf` sobre os contadores RAPL, em dois laptops separados por
+cinco anos de arquitetura Intel. São 720 execuções comparáveis — listas de 10 mil
+a 100 mil elementos, 10 repetições por célula, grade balanceada nas duas máquinas —
+consumindo 16,6 kJ. Rust venceu em 5 das 6 famílias em cada máquina, mas não as
+mesmas cinco: duas famílias invertem o sinal do resultado quando a máquina muda, e
+7 das 12 posições do ranking se alteram.
 
-Big-O conta operações. A conta de luz cobra joules. Entre a operação que você soma no papel
-e o elétron que sai da tomada existe um compilador, um runtime, uma hierarquia de cache e um
-governador de frequência, e nenhum deles aparece no somatório.
+## 1. A pergunta
 
-Queríamos responder uma coisa concreta: quando reescrevemos um algoritmo de ordenação com
-uma ideia a mais, quanto essa ideia economiza de energia de verdade? Implementamos os três
-métodos pedidos (flutuação, inserção e seleção) em duas versões cada, em Go e em Rust, e
-medimos energia, tempo de parede e tempo de CPU com o `perf` lendo os contadores RAPL.
+"Rust é mais eficiente que Go" é o tipo de afirmação que circula sem número
+associado. Quando alguém tenta colocar número, costuma aparecer um segundo
+problema: o número vale para aquela máquina, naquele dia, com aquele algoritmo — e
+é apresentado como se valesse para a linguagem.
 
-No meio do caminho tivemos acesso a uma segunda máquina, de outra geração, e resolvemos
-rodar a bateria inteira de novo nela. Foi a melhor decisão do trabalho. São 1.020 execuções,
-10 por célula, somando 16,5 kJ de energia medida, e a resposta à pergunta acima mudou de
-sinal três vezes entre uma máquina e outra.
+Este relatório ataca as duas coisas ao mesmo tempo. A pergunta de pesquisa é dupla:
 
-Para dar escala antes de entrar nos detalhes: no notebook mais novo, ordenar uma lista de
-100 mil inteiros custou 189,1 J em 14,5 s com a flutuação ingênua em Go, e 0,215 J em 0,017 s
-com o heapsort em Rust. Um fator de 880 entre a pior e a melhor configuração medida. A maior
-diferença que encontramos entre linguagens, no mesmo algoritmo, foi 3,28.
+1. **Dentro de um mesmo algoritmo**, quanta energia e quanto tempo separam a
+   implementação em Go da implementação em Rust?
+2. **Esse ranking é estável** quando a mesma bateria de medições roda em uma
+   máquina de outra geração?
 
-## O cenário
+A segunda pergunta nasceu da análise dos dados. O que adicionalmente pode ser
+dito é se tivermos uma maior amostragem de máquinas distintas como seria o
+comportamento energético.
 
-Duas plataformas separadas por cinco anos de arquitetura Intel. A distância entre elas é o
-que dá valor ao conjunto de dados, e é também o que limita o que dá para concluir.
+---
+
+## 2. O que foi medido
+
+Doze programas de linha de comando — seis em Go, seis em Rust. Cada um lê uma lista
+de inteiros do `stdin`, ordena em memória e imprime o resultado. Nenhum usa a
+ordenação da biblioteca padrão; todos implementam o algoritmo à mão.
+
+### 2.1 Ajustes com nomenclatura `v1`/`v2`
+
+Os programas são nomeados `v1` e `v2` em cada linguagem. Como houve implementação
+de algoritmos pareáveis com nomes distintos, fizemos essa troca (selection possui
+O(log n) e O(n²)).
+
+- `go/go_algs/selection_v1.go` monta um *heap* com `container/heap` — é
+  **heapsort**, Θ(n log n);
+- `rust/rust_algs/selection_sort_v1.rs` é a **seleção clássica do mínimo**, Θ(n²);
+- e as versões `v2` invertem os papéis.
+
+Se fizéssemos a comparação sem fazer essa alteração de nomenclatura, em n = 100 000,
+uma razão de **72,6× "a favor de Go"** em `selection v1` e de **180,4× "a favor de
+Rust"** em `selection v2` no Dell.
+
+Reagrupamos, então, por **família semântica** para poder designar o que de fato o
+código faz e não apenas pelo nome.
+
+| Família comparada | Fonte Go | O que faz | Fonte Rust | O que faz | Complexidade |
+|:--|:--|:--|:--|:--|:--|
+| Bubble ingênuo | `bubble_v1.go` | n passadas completas, sem parada antecipada | `bubble_sort_v1.rs` | idem | Θ(n²) nas duas |
+| Bubble otimizado | `bubble_v2.go` | flag de troca + remoção do maior com `slices.Insert` | `bubble_sort_v2.rs` | limite superior recua até a última troca | Θ(n²); otimizações **diferentes** |
+| Insertion por troca | `insert_v1.go` | `swap` a cada passo do laço interno | `insertion_sort_v1.rs` | idem | Θ(n²) nas duas |
+| Insertion por deslocamento | `insert_v2.go` | guarda a chave e desloca | `insertion_sort_v2.rs` | idem | Θ(n²) nas duas |
+| Selection O(n²) | `selection_`**`v2`**`.go` | `slices.Min` + `slices.Index` + `slices.Delete` | `selection_sort_`**`v1`**`.rs` | seleção clássica do mínimo | Θ(n²); **variantes cruzadas** |
+| Heapsort | `selection_`**`v1`**`.go` | `container/heap` | `selection_sort_`**`v2`**`.rs` | *sift-down* manual | Θ(n log n); **variantes cruzadas** |
+
+Note que em *bubble otimizado* existe outra diferença nas maneiras como foram
+implementadas as melhorias em bubble sort.
+
+### 2.2 Entradas, e o recorte em n ≥ 10 000
+
+Uma lista aleatória por tamanho, gerada uma única vez por
+`geracoes_listas/geraEntrada.cpp` e reutilizada em todas as execuções, nas duas
+máquinas. Isso elimina a variação de entrada entre execuções.
+
+---
+
+## 3. Metodologia
+
+### 3.1 Instrumentação
+
+Cada execução é envolvida por:
+
+```bash
+perf stat -x';' -a -e power/energy-pkg/,duration_time \
+     /usr/bin/time -f '%U;%S' ./binario < lista.in
+```
+
+### 3.2 Repetições e estatística
+
+Dez execuções por célula (família × linguagem × tamanho), em uma grade balanceada de
+36 células por máquina — **720 execuções** comparáveis, somando 16,6 kJ (4,60 Wh) e
+32,4 min sob medição. Todas completaram as medições sem interferências.
+
+Reportamos média e desvio-padrão populacional. As razões entre linguagens trazem
+intervalo de confiança de 95% por *bootstrap* (20 000 reamostragens com reposição) e
+o *d* de Cohen como tamanho de efeito.
+
+---
+
+## 4. As duas máquinas
 
 | Item | Máquina A · Dell | Máquina B · HP |
-|---|---|---|
-| Modelo | Dell Inspiron 15 3511 | notebook consumer, plataforma Broadwell-U |
+|:--|:--|:--|
+| Modelo | Dell Inspiron 15 3511 | HP (notebook consumer, Broadwell-U 2015) |
 | CPU | Intel Core i5-1135G7 @ 2,40 GHz (Tiger Lake, 2020) | Intel Core i5-5200U @ 2,20 GHz (Broadwell, 2015) |
 | Núcleos / threads | 4 / 8 | 2 / 4 |
 | Cache L3 | 8 MiB | 3 MiB |
 | Memória | 8 GiB DDR4-3200 | 11 GiB |
-| Sistema | Linux (saída de `lshw`); distribuição e kernel não registrados | Debian 12 bookworm, kernel 6.1.0-52-amd64 |
-| Governador / turbo | não registrado | `intel_cpufreq`, `schedutil`, 0,5–2,7 GHz, turbo ativo |
-| Toolchain | não registrado | `rustc`/`cargo` 1.94.0; versão do Go não registrada |
-| Domínios RAPL lidos | `power/energy-pkg/` | pkg, cores, dram |
-| Potência média do pacote | ≈ 12,3 W | ≈ 6,0 W |
-| Tamanhos medidos | 10.000 · 50.000 · 100.000 | 10 · 100 · 1.000 · 10.000 · 50.000 · 100.000 |
-| Execuções | 360 (12 programas × 3 tamanhos × 10) | 660 (11 programas × 6 tamanhos × 10) |
-
-As lacunas marcadas como não registrado são reais e atrapalham. O arquivo de specs do Dell é
-uma saída de `lshw`, que descreve hardware e não diz nada sobre distribuição, kernel,
-governador ou versão de compilador. O do HP é bem mais completo, e mesmo assim registra `go:
-não instalado`, apesar das 330 execuções de binários Go medidas naquela máquina. Sempre que
-este post disser "máquina", leia "plataforma inteira": hardware, sistema e compilador juntos.
-Não temos como separar as três coisas com os dados que coletamos.
-
-O outro número que importa da tabela é a potência média do pacote, 12,3 W contra 6,0 W. O
-Dell sustenta o dobro do consumo instantâneo do HP, e isso volta no fim dos resultados.
-
-## O que foi implementado
-
-Doze programas de linha de comando, seis por linguagem. Cada um lê `n` na primeira linha e os
-`n` inteiros na segunda, ordena em memória e imprime o resultado, de modo que o custo de
-entrada e saída seja o mesmo para todos. Nenhum usa a ordenação da biblioteca padrão.
-
-Antes de qualquer comparação, tivemos que arrumar o pareamento. Os arquivos se chamam `v1` e
-`v2` nas duas linguagens, e o nome não corresponde ao que o código faz: `selection_v1.go`
-monta um heap com `container/heap` e é heapsort Θ(n log n), enquanto `selection_sort_v1.rs` é
-a seleção clássica do mínimo, Θ(n²). As versões `v2` invertem os papéis. Comparar os arquivos
-homônimos devolveria uma razão de 73× "a favor de Go" que é pura diferença de complexidade
-assintótica, reprodutível e sem significado nenhum. Reagrupamos por família semântica, pelo
-que o código faz.
-
-| Par comparado | Fonte Go | Fonte Rust | O que muda na segunda versão |
-|---|---|---|---|
-| Flutuação | `bubble_v1.go` → `bubble_v2.go` | `bubble_sort_v1.rs` → `bubble_sort_v2.rs` | Go: flag de troca e extração do maior por `slices.Insert`. Rust: limite do laço externo recua até a última troca. |
-| Inserção | `insert_v1.go` → `insert_v2.go` | `insertion_sort_v1.rs` → `insertion_sort_v2.rs` | Troca a cada passo dá lugar a deslocamento com a chave em registrador. |
-| Seleção | `selection_v2.go` → `selection_v1.go` | `selection_sort_v1.rs` → `selection_sort_v2.rs` | Varredura do mínimo dá lugar a heapsort, Θ(n²) para Θ(n log n). |
-
-**Flutuação.** A versão ingênua faz `n` passadas completas, sem parada antecipada, e trabalha
-igual mesmo sobre um vetor já ordenado. Em Rust, a segunda versão guarda o índice da última
-troca: tudo à direita dele já está no lugar, então a passada seguinte encolhe até ali. Menos
-comparações executadas, menos instruções buscadas e decodificadas, menos joules — era a
-hipótese. Em Go a ideia foi a mesma, implementada de outro jeito: flag de troca mais
-transferência do maior elemento para um vetor de saída com `slices.Insert(sorted, 0, ...)`.
-Inserir na posição 0 desloca todo o conteúdo e custa O(n) por remoção, o que acrescenta um
-trabalho quadrático de movimentação de memória que não existia antes. Essa dupla mede
-linguagem e decisão de implementação ao mesmo tempo, e é assim que ela precisa ser lida.
-
-**Inserção.** A versão por troca desce a chave posição a posição, trocando com o vizinho: três
-atribuições em memória por posição percorrida (`aux = a[j]; a[j] = a[j-1]; a[j-1] = aux`), e a
-condição do laço ainda relê `a[j]`, que acabou de ser escrito. A versão por deslocamento
-guarda a chave numa variável local, empurra os maiores uma casa à direita com uma atribuição
-por posição, e grava a chave uma vez só no fim. O número de comparações é idêntico nos dois
-lados. O que cai para cerca de um terço é o número de escritas, e a hipótese era que menos
-tráfego com o cache L1 e menos pressão no *store buffer* apareceriam no contador.
-
-**Seleção.** A versão clássica procura o mínimo do sufixo a cada iteração: `n(n-1)/2`
-comparações, sempre. Em Go ela foi escrita com `slices.Min`, `slices.Index` e `slices.Delete`,
-o que percorre o vetor umas três vezes por elemento selecionado em vez de uma. O heapsort
-constrói o heap em O(n) e extrai o extremo `n` vezes, cada extração custando O(log n). Para
-n = 100.000, são cerca de 5 × 10⁹ comparações contra 3,4 × 10⁶.
-
-## Como medimos
-
-Cada execução é envolvida por:
-
-```
-perf stat -x';' -a -e power/energy-pkg/,duration_time \
-    /usr/bin/time -f '%U;%S' ./binario < lista.in
-```
-
-Três decisões estão escondidas nessa linha. A primeira é o `-a`, que não é opcional: o
-contador `power/energy-pkg/` vem da PMU `power`, que tem escopo de pacote e não de tarefa, e
-pedir a energia só do processo devolve `<not supported>`. A consequência atravessa o post
-inteiro. O que medimos é a energia do pacote durante a janela de execução, e nenhuma frase
-aqui diz "o algoritmo X consome Y joules". A segunda é que o tempo de CPU vem do GNU `time`,
-porque em modo `-a` os eventos `user_time` e `system_time` do `perf` somam a máquina inteira.
-A terceira é que a compilação fica fora da janela: `go build` e `rustc -O -C debuginfo=0`
-rodam antes de qualquer medição.
-
-Dez execuções por célula, com média e desvio-padrão populacional. As razões entre linguagens
-trazem intervalo de confiança de 95% por *bootstrap* com 20 mil reamostragens. Uma lista
-aleatória por tamanho, gerada uma vez por `geracoes_listas/geraEntrada.cpp` e reutilizada em
-todas as execuções das duas máquinas, o que elimina a variação de entrada e também significa
-que todo resultado aqui vale para uma permutação, não para o caso médio.
-
-Seguindo a lista de *freeze your settings* do material do curso, o que garantimos foi a mesma
-entrada, os mesmos fontes, os mesmos scripts, a ordem fixa de execução e a compilação fora da
-janela. Verificamos depois que não há deriva ao longo das dez repetições: a razão entre a
-primeira execução e a média das nove seguintes é 1,000 nas duas máquinas. O que não foi
-controlado nem registrado: brilho de tela, rede, bateria, temperatura ambiente, governador no
-Dell e processos de segundo plano, sem pausa de resfriamento entre execuções. E nenhuma linha
-de base ociosa foi medida em nenhuma das duas máquinas, que é a lacuna mais séria do conjunto.
-
-## Resultados
-
-### As magnitudes
-
-<figure>
-  <a href="{{ '/assets/img/energia/fig1-energia-100k.svg' | relative_url }}"><img src="{{ '/assets/img/energia/fig1-energia-100k.svg' | relative_url }}" alt="Barras horizontais da energia média por configuração em n = 100.000, um painel por máquina"></a>
-  <figcaption>Figura 1 — Entre a melhor e a pior configuração há um fator de 880 no Dell e de 780 no HP; nenhuma diferença entre linguagens passa de 3,3. Energia média por execução em n = 100.000, escala logarítmica, barra de erro de um desvio-padrão sobre as 10 execuções.</figcaption>
-</figure>
-
-| Par | Ling. | Versão | Dell · E (J) | Dell · t (s) | Dell · P (W) | HP · E (J) | HP · t (s) | HP · P (W) | µJ/elem (HP) |
-|---|---|---|---|---|---|---|---|---|---|
-| Flutuação | Go | ingênua | 189,121 ± 3,162 | 14,525 ± 0,049 | 13,02 | 118,647 ± 5,062 | 19,969 ± 0,236 | 5,94 | 1.186 |
-| Flutuação | Go | com extração | 171,855 ± 2,872 | 12,296 ± 0,055 | 13,98 | 124,724 ± 5,532 | 19,760 ± 0,263 | 6,31 | 1.247 |
-| Flutuação | Rust | ingênua | 126,858 ± 1,568 | 10,356 ± 0,016 | 12,25 | 123,009 ± 2,890 | 20,830 ± 0,130 | 5,90 | 1.230 |
-| Flutuação | Rust | com limite | 129,005 ± 1,291 | 10,462 ± 0,026 | 12,33 | 87,376 ± 0,385 | 15,124 ± 0,010 | 5,78 | 874 |
-| Inserção | Go | por troca | 34,918 ± 0,423 | 3,097 ± 0,001 | 11,28 | 29,300 ± 0,476 | 4,790 ± 0,022 | 6,12 | 293 |
-| Inserção | Go | por deslocamento | 9,569 ± 0,085 | 0,705 ± 0,001 | 13,57 | não executado | — | — | — |
-| Inserção | Rust | por troca | 10,649 ± 0,038 | 0,866 ± 0,001 | 12,30 | 11,645 ± 0,074 | 1,980 ± 0,002 | 5,88 | 116 |
-| Inserção | Rust | por deslocamento | 11,584 ± 0,114 | 0,981 ± 0,001 | 11,81 | 7,428 ± 0,049 | 1,243 ± 0,004 | 5,98 | 74,3 |
-| Seleção | Go | clássica | 38,796 ± 0,450 | 3,241 ± 0,002 | 11,97 | 35,823 ± 0,265 | 5,928 ± 0,013 | 6,04 | 358 |
-| Seleção | Go | heapsort | 0,445 ± 0,023 | 0,033 ± 0,002 | 13,46 | 0,375 ± 0,101 | 0,053 ± 0,006 | 7,00 | 3,75 |
-| Seleção | Rust | clássica | 32,299 ± 0,392 | 2,408 ± 0,001 | 13,41 | 28,759 ± 0,226 | 5,002 ± 0,011 | 5,75 | 288 |
-| Seleção | Rust | heapsort | 0,215 ± 0,007 | 0,017 ± 0,001 | 12,38 | 0,160 ± 0,000 | 0,025 ± 0,000 | 6,34 | 1,60 |
-
-<!-- TODO: acrescentar colunas user/sys por célula (o enunciado, item 3, exige os três tempos).
-     O GNU time já coleta; falta só o analise/ emitir. Confirmar também os nomes dos SVGs. -->
-
-Os programas são monothread e limitados por CPU, sem espera de disco nem de rede, e o tempo
-de CPU acompanha o tempo de parede em todas as células. As colunas `user` e `sys` completas,
-para os seis tamanhos, estão na página de dados.
-
-### O crescimento e o piso do instrumento
-
-<figure>
-  <a href="{{ '/assets/img/energia/fig2-escalabilidade.svg' | relative_url }}"><img src="{{ '/assets/img/energia/fig2-escalabilidade.svg' | relative_url }}" alt="Curvas log-log de energia em função do tamanho da entrada, um painel por par de versões"></a>
-  <figcaption>Figura 2 — Entre n = 10.000 e n = 100.000 a energia das famílias quadráticas cresce com expoente medido de 1,89 a 2,00, contra o 2 da teoria; abaixo de n = 10.000 o que a curva mostra é o piso do instrumento, marcado em cinza. Eixos logarítmicos.</figcaption>
-</figure>
-
-Ver a teoria aparecer com essa limpeza na medição de energia foi uma boa surpresa. O trecho
-plano à esquerda de cada painel, porém, não diz nada sobre algoritmos. Todas as células entre
-n = 10 e n = 1.000 medem cerca de 0,020 J em 3,3 ms, que é o custo de subir o processo e ler
-a entrada, e o coeficiente de variação nessa faixa chega a 47%. Nada abaixo de n = 10.000
-deve ser interpretado.
-
-O piso também contamina o heapsort nos tamanhos grandes. Os 0,160 J do heapsort em Rust no HP
-incluem os mesmos 0,020 J de custo fixo, ou 12,8% do total, e o expoente medido de 0,71 a
-0,77 fica bem abaixo do ~1,05 esperado de `n log n` por causa disso. As cifras de heapsort
-valem como limite superior do custo do algoritmo. Isso tem uma consequência agradável para a
-conclusão principal: a economia de 99% que reportamos mais adiante está subestimada, porque o
-lado barato da comparação é o que carrega proporcionalmente mais sobrecarga.
-
-### A reprodutibilidade
-
-<figure>
-  <a href="{{ '/assets/img/energia/fig3-boxplot-100k.svg' | relative_url }}"><img src="{{ '/assets/img/energia/fig3-boxplot-100k.svg' | relative_url }}" alt="Boxplots do desvio percentual de cada execução em relação à mediana da sua célula"></a>
-  <figcaption>Figura 3 — A dispersão é baixa no Dell (quase todas as células abaixo de 1,5%) e maior nas células de Go no HP, que chegam a 4,4%. Desvio percentual de cada execução em relação à mediana da própria célula, em n = 100.000.</figcaption>
-</figure>
-
-Em joules absolutos as caixas somem, porque as células estão a três ordens de grandeza umas
-das outras; normalizando pela mediana, todas ficam comparáveis. A maioria das células fica
-abaixo de 1,5% de coeficiente de variação, o que para dez execuções sem controle de ambiente
-está bom.
-
-Duas exceções merecem registro, porque o post depende delas. As duas células de flutuação em
-Go no HP têm CV de 4,3% e 4,4%, acima do limiar de 3% a partir do qual costumamos suspeitar
-de interferência em vez de propriedade do programa. A diferença de 5% entre elas ainda
-sobrevive quando se usa o erro-padrão da média em vez do desvio bruto, mas é o resultado mais
-frágil que reportamos. E o heapsort em Go no HP tem 0,375 ± 0,101 J, ou seja, 27% de
-dispersão sobre um valor que já está a poucos passos de contador do piso. Nenhuma leitura
-fina sobre heapsort no HP se sustenta.
-
-### Energia e tempo
-
-<figure>
-  <a href="{{ '/assets/img/energia/fig4-energia-x-duracao.svg' | relative_url }}"><img src="{{ '/assets/img/energia/fig4-energia-x-duracao.svg' | relative_url }}" alt="Dispersão de energia contra tempo de parede para todas as células, log-log, com duas retas de potência constante"></a>
-  <figcaption>Figura 4 — Cada máquina ocupa uma faixa estreita em torno de uma potência praticamente constante, 12,3 W no Dell e 6,0 W no HP, e por isso o ranking de energia é quase idêntico ao de tempo dentro de cada máquina. Células com n ≥ 10.000, eixos logarítmicos.</figcaption>
-</figure>
-
-Os pontos caem sobre duas retas de inclinação 1, uma por máquina, que é o esperado quando a
-potência do pacote varia pouco. Vale desconfiar um pouco do próprio resultado, no entanto. A
-medição é de pacote, e o pacote consome mesmo quando o programa faz pouco: o piso de 0,020 J
-mostra que existe uma parcela fixa razoável dentro de cada célula. Quanto maior essa parcela,
-mais a relação `E = P̄ × t` vira aritmética em vez de achado experimental, porque uma potência
-de base constante força o alinhamento sozinha. Sem a linha de base ociosa, não sabemos de que
-tamanho ela é.
-
-A comparação entre as duas faixas é o que o gráfico tem de mais interessante. O Dell executa
-a flutuação ingênua em Go 1,37× mais rápido que o HP e gasta 1,59× mais energia para fazer o
-mesmo trabalho. Mais rápido não é mais verde quando a plataforma muda: a potência do
-hardware pode anular o ganho de tempo, e aqui anula com sobra.
-
-Dentro de cada máquina a potência também não é tão constante quanto a Figura 4 sugere à
-primeira vista. As células do Dell vão de 11,28 W a 13,98 W, uma faixa de 24%, e é
-exatamente nos resíduos dessa faixa que moram os casos interessantes da próxima seção.
-
-## O que economizou, e o que só economizou numa das máquinas
-
-<figure>
-  <a href="{{ '/assets/img/energia/fig5-ganho.svg' | relative_url }}"><img src="{{ '/assets/img/energia/fig5-ganho.svg' | relative_url }}" alt="Barras divergentes com a variação percentual de energia da segunda versão em relação à primeira, lado a lado para as duas máquinas"></a>
-  <figcaption>Figura 5 — Os três pares de otimização de constante medidos nas duas máquinas trocaram de sinal entre elas; o par que muda a classe de complexidade economizou cerca de 99% nas quatro combinações. Variação percentual da energia da segunda versão em relação à primeira, n = 100.000; negativo é economia.</figcaption>
-</figure>
-
-Esta é a figura do trabalho, e a resposta ao item 1 do enunciado é mais estranha do que
-esperávamos.
-
-| Par | Dell | HP |
-|---|---|---|
-| Flutuação Go: ingênua → com extração | −9,1% | +5,1% |
-| Flutuação Rust: ingênua → com limite | +1,7% | −29,0% |
-| Inserção Rust: por troca → por deslocamento | +8,8% | −36,2% |
-| Inserção Go: por troca → por deslocamento | −72,6% | não executado |
-| Seleção Go: clássica → heapsort | −98,9% | −99,0% |
-| Seleção Rust: clássica → heapsort | −99,3% | −99,4% |
-
-Os três pares de constante multiplicativa que rodaram nas duas máquinas mudaram de sinal. A
-mesma ideia, o mesmo código-fonte, a mesma lista de entrada, e a economia de 29% da flutuação
-com limite em Rust vira um empate de 1,7% em desvantagem no Dell. O deslocamento na inserção
-em Rust economiza 36% numa máquina e custa 8,8% na outra, com desvios pequenos dos dois lados,
-o que descarta ruído como explicação.
-
-Nossa hipótese, e aqui é hipótese, é que as duas otimizações trocam trabalho aritmético por
-trabalho que o processador mais novo já fazia de graça. O laço de limite fixo da versão
-ingênua tem contagem de iterações conhecida, o que ajuda o compilador a desenrolar e
-vetorizar; o limite móvel da versão otimizada cria uma dependência carregada pelo laço que
-atrapalha essa transformação. No Broadwell, onde a versão ingênua não ganha tanto com isso,
-cortar comparações continua valendo a pena. No Tiger Lake, o que se economiza em comparações
-se perde em código pior gerado. Confirmar exigiria `perf stat -e instructions,cycles` nas
-quatro células: se o número de instruções retiradas cair e o tempo não cair junto, a
-explicação é essa.
-
-A economia de energia acompanhou a de tempo em todos os seis pares, com uma exceção que vale
-seção própria.
-
-### A otimização que aumentou o consumo terminando antes
-
-A flutuação com extração, em Go, é a única configuração em que energia e tempo apontam para
-lados opostos, e ela faz isso nas duas máquinas:
-
-| Máquina | Versão | Energia (J) | Tempo (s) | Potência (W) | EDP (J·s) |
-|---|---|---|---|---|---|
-| Dell | ingênua | 189,121 | 14,525 | 13,02 | 2.747 |
-| Dell | com extração | 171,855 | 12,296 | 13,98 | 2.113 |
-| HP | ingênua | 118,647 | 19,969 | 5,94 | 2.369 |
-| HP | com extração | 124,724 | 19,760 | 6,31 | 2.465 |
-
-O padrão consistente entre as duas máquinas é a potência: a versão com extração puxa 7,4% a
-mais de watts no Dell e 6,2% a mais no HP. O que muda é o que acontece com o tempo. No Dell
-ela termina 15,3% mais cedo, e o ganho de tempo cobre o aumento de potência com folga, dando
-9,1% de economia e um EDP 23% melhor. No HP ela termina 1,0% mais cedo, o aumento de potência
-domina, e o resultado é 5,1% a mais de energia com o EDP 4% pior.
-
-A causa da potência maior é o `slices.Insert` na posição 0, que troca comparações por
-movimentação de memória em bloco. Nossa leitura é que essa troca sai cara em watts e barata
-em segundos: `memmove` é trabalho de alta vazão, mantém as unidades de load/store e o
-subsistema de memória ocupados e sobe o consumo instantâneo do pacote, enquanto o laço de
-comparação e desvio da versão ingênua gasta mais ciclos por elemento com menos hardware
-ativo. Com 8 MiB de L3 e memória mais rápida, o Dell absorve o tráfego extra e ainda sai
-ganhando; com 3 MiB, o HP não absorve. Para confirmar bastaria ler o domínio `dram` do RAPL
-separadamente, que já está disponível no HP, e ver se os watts extras estão de fato na
-memória.
-
-A lição contraria a intuição que a gente tinha antes de medir. Uma otimização correta no
-papel pode piorar o consumo quando o custo de memória dela não entra na conta, e o sinal
-dessa piora depende da máquina em que o código roda. O mesmo padrão aparece na seleção
-clássica em Go, escrita com `slices.Min`, `slices.Index` e `slices.Delete`: três varreduras
-por elemento selecionado contra uma da versão em Rust, e uma penalidade de 20% em energia no
-Dell.
-
-### O que sobreviveu
-
-Trocar a seleção clássica pelo heapsort economizou entre 98,9% e 99,4% da energia, nas duas
-máquinas e nas duas linguagens, e é a única mudança do conjunto que economizou em todas as
-combinações. A seleção clássica compara cerca de 5 × 10⁹ pares para n = 100.000; o heapsort
-faz uns 3,4 × 10⁶. Cada comparação evitada é uma instrução que não foi buscada, decodificada
-e executada, e um acesso à memória que não aconteceu. Ordenar os mesmos 100 mil inteiros
-passou de 32,3 J em 2,41 s para 0,215 J em 0,017 s no Dell, e de 28,8 J em 5,00 s para 0,160 J
-em 0,025 s no HP.
-
-Traduzindo os dois tipos de decisão para uma unidade utilizável: um serviço que ordenasse um
-milhão de listas de 100 mil inteiros por dia no Dell economizaria 52 kWh por dia trocando a
-flutuação ingênua em Go pelo heapsort em Rust, e 0,064 kWh por dia mantendo o heapsort e só
-migrando de Go para Rust. A primeira decisão tem cerca de 820 vezes a alavancagem da segunda,
-e a comparação é generosa com a linguagem, porque o heapsort é justamente onde a vantagem
-relativa de Rust é maior.
-
-### Go contra Rust, com ressalva
-
-Rust venceu em 5 das 6 famílias no Dell, por fatores de 1,20× a 3,28× em energia, e em 4 das
-5 no HP. A exceção no Dell é a inserção por deslocamento, onde Go gasta 17% menos e é 39%
-mais rápido. No HP, a flutuação ingênua dá empate técnico (0,96× com IC 95% [0,94; 1,00]).
-Nas duas máquinas os binários Go sustentam potência um pouco maior que os de Rust, 3,8% no
-Dell e 6,3% no HP, o que é compatível com o runtime de Go manter threads e coletor de lixo
-ativos ao lado do laço de ordenação.
-
-Esse eixo é o mais fraco do trabalho e não deve ser lido como propriedade das linguagens. As
-duas versões otimizadas de flutuação implementam ideias diferentes, o toolchain do Dell não
-foi registrado, e a versão do Go no HP é desconhecida. A comparação defensável aqui é versão
-contra versão dentro da mesma linguagem e da mesma máquina, que é como as seções anteriores
-estão organizadas.
-
-## Limitações
-
-Não medimos linha de base ociosa em nenhuma das máquinas, e essa é a lacuna mais séria. Como
-o `perf -a` mede o pacote inteiro, cada número é a soma do trabalho do programa com o consumo
-da máquina ligada durante a janela. Dos 189,1 J da flutuação ingênua, não sabemos dizer
-quanto é cada coisa. A correção é barata e entra no próximo ciclo: 60 s de repouso medidos
-antes de cada bloco, e reportar também a energia líquida.
-
-O piso do instrumento, 0,01 J de resolução e ~0,020 J de custo fixo por execução, torna tudo
-abaixo de n = 10.000 ininterpretável e ainda embute 12,8% nos números de heapsort em 100.000.
-Ordenar em laço dentro do mesmo processo amortizaria a inicialização.
-
-A janela inclui a leitura da entrada e a impressão da saída, um custo O(n) desprezível para os
-quadráticos e nada desprezível para o heapsort. Cada resultado vale para uma única permutação
-aleatória por tamanho; entradas já ordenadas mudariam completamente as versões com parada
-antecipada. O HP não executou `insert_v2.go`, de modo que o par de inserção em Go só tem
-medição em uma máquina, e é a lacuna mais fácil de fechar. E duas máquinas não são uma
-amostra: mostramos que o ranking pode mudar com a plataforma, sem estimar com que frequência
-isso acontece.
-
-## Conclusão
-
-Mudar a classe de complexidade foi a única economia que atravessou a troca de máquina. O
-heapsort cortou mais de 98,9% da energia da seleção clássica nas quatro combinações de
-linguagem e plataforma, e a conta subestima o ganho, porque o custo fixo de execução pesa
-proporcionalmente mais sobre o lado barato.
-
-Nenhuma das otimizações de constante multiplicativa sobreviveu à troca de plataforma com o
-mesmo sinal. Três pares rodaram nas duas máquinas e os três mudaram de lado, com variações de
-−36% a +8,8% para a mesma ideia e o mesmo código-fonte. Um relatório escrito com uma máquina
-só teria afirmado com confiança coisas que o segundo notebook desmente.
-
-O resultado que vamos lembrar daqui a um ano é a flutuação com extração em Go: uma otimização
-correta no papel, que terminou mais cedo nas duas máquinas e mesmo assim gastou mais energia
-em uma delas, porque trocou comparações por movimentação de memória e subiu a potência em
-7%. A realocação do `slices.Insert` não entra em nenhuma contagem de comparações, e entra no
-contador RAPL.
+| Sistema | Linux (`lshw`); distribuição e kernel não registrados | Debian 12 *bookworm*, kernel 6.1.0-52-amd64 |
+| Governor / turbo | não registrado | `intel_cpufreq`, `schedutil`, 0,5–2,7 GHz, turbo ativo |
+| Toolchain | não registrado | rustc/cargo 1.94.0; versão do Go não registrada |
+| Domínios RAPL lidos | `pkg` | `pkg`, `cores`, `dram` |
+| Potência média do pacote (n ≥ 10 000) | ≈ 12,3 W | ≈ 5,9 W |
+| Tamanhos comparados | 10 000 · 50 000 · 100 000 | 10 000 · 50 000 · 100 000 |
+| Execuções comparáveis | 360 (12 programas × 3 tamanhos × 10) | 360 (12 programas × 3 tamanhos × 10) |
+| Execuções extras, fora do recorte | — | 360 (n = 10 · 100 · 1 000), usadas só na §3.4 |
 
 ---
 
-*As tabelas completas para n = 10.000 e n = 50.000, com energia, tempos, potência e energia
-por elemento, estão em [dados do experimento](/dados/).*
+## 5. Resultados
 
-*Reprodução: `scripts/implementacao.sh -r 10 -t "10000 50000 100000"` seguido de
-`scripts/medicao.sh saida.csv`. É preciso `perf` com acesso a `power/energy-pkg/`, ou seja
-`perf_event_paranoid ≤ 0` ou privilégio de root. Tudo está em
-[github.com/heitorpita/GoxRust_energy](https://github.com/heitorpita/GoxRust_energy).*
+Utilizamos n = 100 000, o maior tamanho comum às duas máquinas, para poder fazer as
+comparações entre eles.
 
-*Referências: Cruz, L., "Green Software Engineering Done Right", material do curso
-Sustainable Software Engineering (TU Delft); Pereira, R. et al., "Energy Efficiency across
-Programming Languages", SLE 2017; Khan, K. N. et al., "RAPL in Action", ACM ToMPECS, 2018.*
+### 5.1 Rust vence quase sempre
+
+<figure>
+  <a href="{{ '/assets/img/energia/fig1_ranking_linguagens.png' | relative_url }}"><img src="{{ '/assets/img/energia/fig1_ranking_linguagens.png' | relative_url }}" alt="Ranking Go x Rust por família de algoritmo"></a>
+  <figcaption>Figura 1 — Razão de energia Go ÷ Rust por família de algoritmo, nas duas máquinas, em n = 100 000. Acima de 1,00 Rust gasta menos.</figcaption>
+</figure>
+
+| Família                    | Máquina          | Go (J)   | Rust (J)   | Razão Go÷Rust   | IC 95%       | *d* de Cohen   | Vencedor       |
+|:---------------------------|:-----------------|:---------|:-----------|:----------------|:-------------|:---------------|:---------------|
+| Bubble ingênuo             | Dell · i5-1135G7 | 189      | 127        | 1,49            | [1,47; 1,51] | 24,9           | **Rust** 1,49× |
+| Bubble otimizado           | Dell · i5-1135G7 | 172      | 129        | 1,33            | [1,32; 1,35] | 19,2           | **Rust** 1,33× |
+| Insertion por troca        | Dell · i5-1135G7 | 34,9     | 10,6       | 3,28            | [3,25; 3,30] | 80,8           | **Rust** 3,28× |
+| Insertion por deslocamento | Dell · i5-1135G7 | 9,57     | 11,6       | 0,83            | [0,82; 0,83] | -20,0          | **Go** 1,21×   |
+| Selection O(n²)            | Dell · i5-1135G7 | 38,8     | 32,3       | 1,20            | [1,19; 1,21] | 15,4           | **Rust** 1,20× |
+| Heapsort                   | Dell · i5-1135G7 | 0,445    | 0,215      | 2,07            | [2,00; 2,15] | 13,6           | **Rust** 2,07× |
+| Bubble ingênuo             | HP · i5-5200U    | 118      | 123        | 0,96            | [0,94; 0,97] | -2,5           | **Go** 1,04×   |
+| Bubble otimizado           | HP · i5-5200U    | 120      | 87,4       | 1,38            | [1,37; 1,38] | 83,2           | **Rust** 1,38× |
+| Insertion por troca        | HP · i5-5200U    | 26,1     | 11,6       | 2,24            | [2,23; 2,25] | 144,9          | **Rust** 2,24× |
+| Insertion por deslocamento | HP · i5-5200U    | 11,7     | 7,43       | 1,58            | [1,56; 1,60] | 32,6           | **Rust** 1,58× |
+| Selection O(n²)            | HP · i5-5200U    | 36,4     | 28,8       | 1,26            | [1,26; 1,27] | 41,3           | **Rust** 1,26× |
+| Heapsort                   | HP · i5-5200U    | 0,338    | 0,160      | 2,11            | [2,05; 2,19] | 13,7           | **Rust** 2,11× |
+
+**Rust venceu 5 das 6 famílias em cada máquina.** Onde vence, o faz por fatores
+entre 1,20× e 3,28× em energia. Todas as diferenças são estatisticamente sólidas:
+nenhum intervalo de confiança contém 1,00, e vários efeitos de Cohen passam de
+*d* = 20.
+
+| Família | Dell · i5-1135G7 | HP · i5-5200U |
+|:--|:--|:--|
+| Bubble ingênuo | **Rust** 1,49× | **Go** 1,04× |
+| Insertion por deslocamento | **Go** 1,21× | **Rust** 1,58× |
+
+Talvez, portanto, Rust seja "2×" melhor que Go. Mas aqui nasceu o que devemos
+talvez ampliar: se mudarmos para uma distribuição maior de máquinas e
+configurações, esse valor se mantém?
+
+### 5.2 O algoritmo é o que importa no final
+
+<figure>
+  <a href="{{ '/assets/img/energia/fig2_custo_absoluto.png' | relative_url }}"><img src="{{ '/assets/img/energia/fig2_custo_absoluto.png' | relative_url }}" alt="Custo absoluto de cada família em n = 100 000"></a>
+  <figcaption>Figura 2 — Energia média por execução de cada família em n = 100 000, escala logarítmica. A distância entre famílias é de quase três ordens de grandeza; entre linguagens, no máximo 3,28×.</figcaption>
+</figure>
+
+Entre a melhor e a pior configuração medida há um fator de **880× em energia** no
+Dell (0,215 J para heapsort em Rust contra 189,1 J para bubble ingênuo em Go) e de
+**769×** no HP. Nenhuma diferença entre linguagens chega perto disso: a maior que
+medimos é 3,28×. **O algoritmo tem cerca de 268× mais alcance que a linguagem** no
+Dell e 343× no HP.
+
+### 5.3 A escala confirma a complexidade
+
+<figure>
+  <a href="{{ '/assets/img/energia/fig3_escala.png' | relative_url }}"><img src="{{ '/assets/img/energia/fig3_escala.png' | relative_url }}" alt="Energia em função do tamanho da entrada"></a>
+  <figcaption>Figura 3 — Energia em função do tamanho da entrada, eixos logarítmicos, sobre os três tamanhos do recorte (10 000, 50 000 e 100 000).</figcaption>
+</figure>
+
+Inclinação da reta log–log da **energia** contra *n*, ajustada sobre os três
+tamanhos do recorte. 2,0 = custo quadrático; 1,0 = linear.
+
+| Família                    | Dell · Go   | Dell · Rust   | HP · Go   | HP · Rust   |
+|:---------------------------|:------------|:--------------|:----------|:------------|
+| Bubble ingênuo             | 2,22        | 2,40          | 2,01      | 1,98        |
+| Bubble otimizado           | 2,33        | 2,46          | 2,02      | 2,01        |
+| Insertion por troca        | 1,95        | 1,87          | 1,95      | 1,93        |
+| Insertion por deslocamento | 1,85        | 1,90          | 1,95      | 1,91        |
+| Selection O(n²)            | 1,96        | 1,96          | 2,02      | 1,96        |
+| Heapsort                   | 0,81        | 0,70          | 0,88      | 0,82        |
+
+No HP, as cinco famílias quadráticas ficam em **1,91 a 2,02**. O Dell, com janelas
+muito mais curtas e portanto mais sensível ao custo fixo de iniciar o processo, fica
+mais disperso (1,85 a 2,46).
+
+O heapsort marca 0,70 a 0,88, bem abaixo do ~1,05 esperado de n log n.
+
+Com três pontos, o ajuste é curto: serve para separar Θ(n²) de Θ(n log n), não para
+estimar a constante com precisão.
+
+### 5.4 O ranking muda com a troca de máquina
+
+<figure>
+  <a href="{{ '/assets/img/energia/fig4_mudanca_de_ranking.png' | relative_url }}"><img src="{{ '/assets/img/energia/fig4_mudanca_de_ranking.png' | relative_url }}" alt="Posição de cada implementação em cada máquina"></a>
+  <figcaption>Figura 4 — Posição de cada uma das 12 implementações no ranking de energia em n = 100 000, ligando a posição no Dell à posição no HP. Sete das doze posições mudam.</figcaption>
+</figure>
+
+| Implementação                     | Dell · pos.   | Dell · energia (J)   | HP · pos.   | HP · energia (J)   | Δ   |
+|:----------------------------------|:--------------|:---------------------|:------------|:-------------------|:----|
+| Heapsort · Rust                   | 1º            | 0,215                | 1º          | 0,160              | =   |
+| Heapsort · Go                     | 2º            | 0,445                | 2º          | 0,338              | =   |
+| Insertion por deslocamento · Go   | 3º            | 9,57                 | 5º          | 11,7               | ▼ 2 |
+| Insertion por troca · Rust        | 4º            | 10,6                 | 4º          | 11,6               | =   |
+| Insertion por deslocamento · Rust | 5º            | 11,6                 | 3º          | 7,43               | ▲ 2 |
+| Selection O(n²) · Rust            | 6º            | 32,3                 | 7º          | 28,8               | ▼ 1 |
+| Insertion por troca · Go          | 7º            | 34,9                 | 6º          | 26,1               | ▲ 1 |
+| Selection O(n²) · Go              | 8º            | 38,8                 | 8º          | 36,4               | =   |
+| Bubble ingênuo · Rust             | 9º            | 127                  | 12º         | 123                | ▼ 3 |
+| Bubble otimizado · Rust           | 10º           | 129                  | 9º          | 87,4               | ▲ 1 |
+| Bubble otimizado · Go             | 11º           | 172                  | 11º         | 120                | =   |
+| Bubble ingênuo · Go               | 12º           | 189                  | 10º         | 118                | ▲ 2 |
+
+Esta é a resposta à segunda pergunta de pesquisa. O topo é estável — heapsort em
+Rust e depois em Go ocupam o 1.º e o 2.º lugar nas duas máquinas, com margem enorme.
+Daí para baixo, **7 das 12 posições se alteram**, com cruzamentos que não são sutis:
+
+- *Bubble ingênuo em Rust* despenca da 9.ª posição no Dell para a **12.ª** no HP,
+  enquanto a versão em Go sobe da 12.ª para a 10.ª. As duas trocam de lado.
+- *Insertion por deslocamento* troca as duas linguagens de posição: Go era 3.º e
+  Rust 5.º no Dell; no HP, Rust é 3.º e Go é 5.º.
+
+Um relatório que tivesse medido só o Dell concluiria que Go vence no *insertion* por
+deslocamento. Um que tivesse medido só o HP concluiria o contrário. As duas
+conclusões estariam corretas — sobre uma máquina cada.
+
+### 5.5 Mais rápido não é mais verde
+
+<figure>
+  <a href="{{ '/assets/img/energia/fig5_energia_contra_tempo.png' | relative_url }}"><img src="{{ '/assets/img/energia/fig5_energia_contra_tempo.png' | relative_url }}" alt="Energia contra tempo, com retas de potência constante"></a>
+  <figcaption>Figura 5 — Energia contra tempo de parede, eixos logarítmicos, com as retas de potência constante de cada máquina (≈ 12,3 W no Dell, ≈ 5,9 W no HP).</figcaption>
+</figure>
+
+Os pontos caem sobre duas retas de inclinação 1, uma por máquina. Isso é o esperado
+quando a potência do pacote pouco varia: **E ≈ P × t**, com P ≈ 12,3 W no Dell e
+P ≈ 5,9 W no HP. É a razão pela qual, neste experimento, o ranking de energia é
+quase idêntico ao de tempo.
+
+Duas consequências importam. A primeira é que **o que medimos é energia-até-concluir
+da máquina inteira** — uma métrica legítima, é o que uma fatura de energia cobra,
+mas que não é a energia marginal do algoritmo.
+
+A segunda aparece ao comparar as faixas. **O Dell é mais rápido nas 12
+implementações** (de 1,27× a 2,57×) e ainda assim **gasta mais joules em 10 delas**.
+No caso extremo, executa bubble ingênuo em Go 1,36× mais rápido e gasta 1,60× mais
+energia para fazê-lo. A potência da plataforma pode anular o ganho de tempo — e aqui
+anula com sobra.
+
+### 5.6 Go puxa alguns pontos percentuais a mais de potência
+
+| Máquina          | Go      | Rust    | Diferença   |
+|:-----------------|:--------|:--------|:------------|
+| Dell · i5-1135G7 | 12,56 W | 12,10 W | **+3,8 %**  |
+| HP · i5-5200U    | 6,06 W  | 5,80 W  | **+4,4 %**  |
+
+Recorte: todas as células com n ≥ 10 000. A diferença é pequena mas consistente nas
+duas máquinas, compatível com o *runtime* de Go manter *threads* e coletor de lixo
+ativos ao lado do laço de ordenação. Como a potência entra multiplicando o tempo,
+essa diferença se soma à diferença de tempo em vez de compensá-la — o que explica por
+que as razões de energia são em geral um pouco maiores que as razões de tempo.
+
+A repartição dos domínios RAPL no HP (o único que os registrou separadamente) é
+estável em todas as implementações: cerca de 72% em `cores`, 19% em `dram` e 9% no
+resto do pacote. Nenhuma delas é mais intensiva em memória que as outras de forma
+relevante.
+
+### 5.7 Tabela completa
+
+| Família                    | Ling.   | Dell · E (J)    | Dell · t (s)     | Dell · P (W)   | Dell · µJ/el.   | HP · E (J)      | HP · t (s)       | HP · P (W)   | HP · µJ/el.   |
+|:---------------------------|:--------|:----------------|:-----------------|:---------------|:----------------|:----------------|:-----------------|:-------------|:--------------|
+| Bubble ingênuo             | Go      | 189,121 ± 3,162 | 14,5246 ± 0,0486 | 13,02          | 1 891,21        | 117,931 ± 0,323 | 19,7987 ± 0,0115 | 5,96         | 1 179,31      |
+|                            | Rust    | 126,858 ± 1,568 | 10,3561 ± 0,0156 | 12,25          | 1 268,58        | 123,009 ± 2,890 | 20,8301 ± 0,1295 | 5,90         | 1 230,09      |
+| Bubble otimizado           | Go      | 171,855 ± 2,872 | 12,2964 ± 0,0546 | 13,98          | 1 718,55        | 120,465 ± 0,410 | 19,4667 ± 0,0108 | 6,19         | 1 204,65      |
+|                            | Rust    | 129,005 ± 1,291 | 10,4622 ± 0,0260 | 12,33          | 1 290,05        | 87,376 ± 0,385  | 15,1237 ± 0,0099 | 5,78         | 873,76        |
+| Insertion por troca        | Go      | 34,918 ± 0,423  | 3,0967 ± 0,0013  | 11,28          | 349,18          | 26,130 ± 0,120  | 4,6401 ± 0,0040  | 5,63         | 261,30        |
+|                            | Rust    | 10,649 ± 0,038  | 0,8659 ± 0,0007  | 12,30          | 106,49          | 11,645 ± 0,074  | 1,9803 ± 0,0020  | 5,88         | 116,45        |
+| Insertion por deslocamento | Go      | 9,569 ± 0,085   | 0,7050 ± 0,0006  | 13,57          | 95,69           | 11,730 ± 0,180  | 1,8085 ± 0,0079  | 6,49         | 117,30        |
+|                            | Rust    | 11,584 ± 0,114  | 0,9809 ± 0,0011  | 11,81          | 115,84          | 7,428 ± 0,049   | 1,2425 ± 0,0042  | 5,98         | 74,28         |
+| Selection O(n²)            | Go      | 38,796 ± 0,450  | 3,2413 ± 0,0021  | 11,97          | 387,96          | 36,374 ± 0,131  | 5,9206 ± 0,0053  | 6,14         | 363,74        |
+|                            | Rust    | 32,299 ± 0,392  | 2,4081 ± 0,0007  | 13,41          | 322,99          | 28,759 ± 0,226  | 5,0024 ± 0,0110  | 5,75         | 287,59        |
+| Heapsort                   | Go      | 0,445 ± 0,023   | 0,0332 ± 0,0015  | 13,46          | 4,45            | 0,338 ± 0,018   | 0,0496 ± 0,0017  | 6,82         | 3,38          |
+|                            | Rust    | 0,215 ± 0,007   | 0,0174 ± 0,0009  | 12,38          | 2,15            | 0,160 ± 0,000   | 0,0252 ± 0,0003  | 6,34         | 1,60          |
+
+Os tamanhos 50 000 e 10 000, o coeficiente de variação por célula e as razões em
+tempo estão no [notebook de análise](https://github.com/heitorpita/GoxRust_energy/blob/main/analise/analise.ipynb).
+
+---
+
+## 6. Tamanho de efeito prático
+
+Quase todas as diferenças são estatisticamente sólidas. Isso, porém, diz pouco sobre
+se a diferença **importa**. Vale traduzir os dois tipos de decisão em uma unidade que
+alguém consiga usar: um serviço que ordene um milhão de listas de 100 000 inteiros
+por dia.
+
+| Decisão | Ganho por execução | Ganho por dia |
+|:--|--:|--:|
+| **Trocar de algoritmo** (bubble ingênuo em Go → heapsort em Rust) | 188,91 J | **52,47 kWh** |
+| **Trocar só de linguagem** (heapsort em Go → heapsort em Rust) | 0,230 J | **0,064 kWh** |
+
+A primeira decisão tem **821× a alavancagem** da segunda no Dell, e 690× no HP. E a
+comparação é generosa com a linguagem: heapsort é justamente onde a vantagem
+relativa de Rust é maior (2,07×). Se o algoritmo já é bom, o ganho absoluto de
+reescrevê-lo em outra linguagem é pequeno; se o algoritmo é ruim, nenhuma linguagem
+salva.
+
+> O importante é o algoritmo, não a linguagem. Sua variação pode ser muito importante
+> em uma escala muito grande, mas em projetos menores não chega a ser importante
+> quanto o algoritmo.
+
+---
+
+## 7. Conclusões
+
+1. **Rust foi mais eficiente na maioria dos casos, com magnitude muito variável.**
+   Cinco das seis famílias em cada máquina, por fatores de 1,20× a 3,28× em energia.
+   Mas não as mesmas cinco: o placar idêntico esconde duas inversões. A vantagem não
+   é uma constante da linguagem — é uma função do algoritmo e da plataforma.
+2. **O ranking depende da máquina.** 7 das doze posições mudam entre as
+   plataformas, e duas famílias — bubble ingênuo e insertion por deslocamento —
+   invertem o sinal do resultado. Qualquer *benchmark* de linguagem em uma só máquina
+   está reportando uma propriedade do par linguagem-máquina.
+3. **Mais rápido não é mais verde entre plataformas.** O Dell é 1,3× a 2,6× mais
+   rápido que o HP em todas as implementações e, em 10 de 12, gasta mais joules para
+   o mesmo trabalho, porque sustenta o dobro da potência de pacote.
+4. **A alavancagem está no algoritmo, por quase três ordens de grandeza.**
+   880× entre a melhor e a pior configuração, contra no máximo 3,28× entre
+   linguagens.
+5. **Go sustenta consistentemente uma potência de pacote maior** — +3,8% no Dell,
+   +4,4% no HP — o que soma à diferença de tempo em vez de compensá-la.
+
+---
+
+## 8. Replicação
+
+Todo o material está em
+[github.com/heitorpita/GoxRust_energy](https://github.com/heitorpita/GoxRust_energy):
+os programas medidos, os scripts que rodam a bateria sob `perf`, os dois CSV
+consolidados e o notebook que produz cada número e cada figura deste relatório.
+
+```bash
+# refazer a análise a partir dos CSV
+jupyter lab analise/analise.ipynb        # e Run All
+
+# refazer a bateria em uma terceira máquina
+scripts/implementacao.sh -r 10 -t "10000 50000 100000"
+scripts/medicao.sh saida.csv
+```
+
+É preciso `perf` com acesso a `power/energy-pkg/` — ou seja,
+`perf_event_paranoid ≤ 0` ou privilégio de *root*.
+
+---
+
+## 9. Fontes
+
+1. Cruz, L. *Green Software Engineering Done Right: a Scientific Guide to Set Up
+   Energy Efficiency Experiments.* Material do curso Sustainable Software
+   Engineering, TU Delft.
+   <https://luiscruz.github.io/course_sustainableSE/2026/p1_measuring_software/>
+2. Documentação do `perf stat` e da PMU `power` (Intel RAPL) no kernel Linux:
+   `tools/perf/Documentation/perf-stat.txt`.
