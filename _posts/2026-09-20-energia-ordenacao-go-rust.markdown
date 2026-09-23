@@ -7,7 +7,7 @@ image: /assets/img/energia/fig1_ranking_linguagens.png
 ---
 
 **Gabriel Moura e Heitor Pita**  
-Tópicos Avançados Computação 4 — Projeto 1, medindo software.  
+Tópicos Avançados Em Computação 4 — Projeto 1, medindo software.  
 Código, dados e scripts: [github.com/heitorpita/GoxRust_energy](https://github.com/heitorpita/GoxRust_energy)
 
 <style>
